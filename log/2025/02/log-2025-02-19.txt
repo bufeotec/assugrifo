@@ -1,0 +1,60 @@
+2025-02-19 10:41:38[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\models\Encriptar.php: 17[MESSAGGE]strlen(): Passing null to parameter #1 ($string) of type string is deprecated
+
+2025-02-19 10:41:39[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\models\Encriptar.php: 17[MESSAGGE]strlen(): Passing null to parameter #1 ($string) of type string is deprecated
+
+2025-02-19 10:41:45[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\models\Encriptar.php: 17[MESSAGGE]strlen(): Passing null to parameter #1 ($string) of type string is deprecated
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 39[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 40[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 41[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 42[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 43[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 49[MESSAGGE]Undefined variable $estado_cpe
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 50[MESSAGGE]Undefined variable $estado_cpe
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 51[MESSAGGE]Undefined variable $estado_cpe
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 208[MESSAGGE]Undefined variable $total_soles
+
+2025-02-19 10:41:46[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 208[MESSAGGE]number_format(): Passing null to parameter #1 ($num) of type float is deprecated
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\models\Encriptar.php: 17[MESSAGGE]strlen(): Passing null to parameter #1 ($string) of type string is deprecated
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 39[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 40[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 41[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 42[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 43[MESSAGGE]Undefined variable $tipo_venta
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 49[MESSAGGE]Undefined variable $estado_cpe
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 50[MESSAGGE]Undefined variable $estado_cpe
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 51[MESSAGGE]Undefined variable $estado_cpe
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 184[MESSAGGE]Undefined property: stdClass::$pago_total
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 184[MESSAGGE]Undefined property: stdClass::$pago_total
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 208[MESSAGGE]Undefined variable $total_soles
+
+2025-02-19 10:41:48[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\view\ventas\historial_ventas.php: 208[MESSAGGE]number_format(): Passing null to parameter #1 ($num) of type float is deprecated
+
+2025-02-19 10:41:51[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\models\Encriptar.php: 17[MESSAGGE]strlen(): Passing null to parameter #1 ($string) of type string is deprecated
+
+2025-02-19 10:41:52[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 2 IN C:\laragon\www\bomba\app\view\ventas\generar_guia.php: 140[MESSAGGE]Undefined array key 1
+
+2025-02-19 10:41:52[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\view\ventas\generar_guia.php: 140[MESSAGGE]round(): Passing null to parameter #1 ($num) of type int|float is deprecated
+
+2025-02-19 12:04:30[UTC -5] [ip] 127.0.0.1 [lugar] Excepcion No Manejada [texto] [LEVEL]: 8192 IN C:\laragon\www\bomba\app\models\Encriptar.php: 17[MESSAGGE]strlen(): Passing null to parameter #1 ($string) of type string is deprecated
+
