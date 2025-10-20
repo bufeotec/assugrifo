@@ -164,9 +164,9 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= _SERVER_;?>">
             <div class="sidebar-brand-icon">
-                <img src="<?= _SERVER_;?>media/logo/logo_cralm.png" style="width: 60px;" alt="Logo" />
+                <img src="<?= _SERVER_._LOGO_GENERAL;?>" style="width: 60px;" alt="Logo" />
             </div>
-            <div class="sidebar-brand-text mx-3">CRALM GROUP</div>
+            <div class="sidebar-brand-text mx-3"><?= _EMPRESA_?></div>
         </a>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">

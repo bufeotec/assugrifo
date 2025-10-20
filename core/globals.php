@@ -25,14 +25,13 @@ define('_PASSWORD_DB_', '');
 
 //Definicion de clave de desencriptacion
 define('_FULL_KEY_','ñklmqz');
-//Titulo
-define('_TITLE_', 'CRALM');
+
 //Rutas de Archivos
 define('_STYLES_ALL_', 'styles/');
 define('_STYLES_ADMIN_', 'styles/admin/');
 define('_STYLES_LOGIN_', 'styles/login/');
 define('_STYLES_INDEX_', 'styles/inicio/');
-define('_ICON_', 'media/logo/logo_cralm.png');
+
 define('_JS_','js/');
 define('_VIEW_PATH_', 'app/view/');
 define('_LIBS_', 'libs/');
@@ -42,6 +41,23 @@ define('_TIEMPO_COOKIE',1 * 1 * 60 * 60);
 //Version
 define('_VERSION_','0.1');
 define('_MYSITE_','https://bufeotec.com');
+
+//Variables para imagenes y estilos varios
+define('_PROD_', false);
+define('_TITLE_', 'BUFEO GRIFO');
+define('_ICON_', 'media/principales/icono.png');
+define('_LOGO_GENERAL', 'media/principales/logo.png');
+define('_LOGO_LOGIN', 'media/principales/logo_fondo.png');
+define('_LOGO_TICKETERA', 'media/principales/logo_ticketera.png');
+
+define('_EMPRESA_', 'BUFEO TEC S.A.C.');
+define('_RUC_', '20604352429');
+define('_DIRECCION_CORTA_', 'CAL.SIEMPRE VIVA NRO. 234');
+define('_DIRECCION_', 'CAL.SIEMPRE VIVA NRO. 234 LORETO - MAYNAS - IQUITOS');
+define('_DIRECCION_UBI_', 'LORETO - MAYNAS - IQUITOS');
+
+define('_CERTIFICADO_', 'certificado_prueba.pfx');
+define('_PASS_CERTI_', '12345678');
 
 // Manejo de Errores Personalizado de PHP a Try/Catch
 function exception_error_handler($severidad, $mensaje, $fichero, $linea) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-10-2025 a las 20:51:59
+-- Tiempo de generación: 20-10-2025 a las 04:30:25
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -39,6 +39,13 @@ CREATE TABLE `caja` (
   `caja_cierre_fecha` datetime DEFAULT NULL,
   `caja_estado` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `caja`
+--
+
+INSERT INTO `caja` (`id_caja`, `caja_fecha`, `caja_apertura`, `id_caja_numero`, `id_usuario_apertura`, `caja_apertura_fecha`, `caja_cierre`, `id_usuario_cierre`, `caja_cierre_fecha`, `caja_estado`) VALUES
+(1, '2025-10-19', 0.00, 1, 1, '2025-10-19 23:00:28', NULL, NULL, '2025-10-19 23:00:28', 1);
 
 -- --------------------------------------------------------
 
@@ -284,7 +291,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`id_empresa`, `empresa_razon_social`, `empresa_nombrecomercial`, `empresa_descripcion`, `empresa_ruc`, `empresa_domiciliofiscal`, `empresa_pais`, `empresa_departamento`, `empresa_provincia`, `empresa_distrito`, `empresa_ubigeo`, `empresa_telefono1`, `empresa_telefono2`, `empresa_celular1`, `empresa_celular2`, `empresa_foto`, `empresa_correo`, `empresa_usuario_sol`, `empresa_clave_sol`, `empresa_gre_id`, `empresa_gre_clave`, `empresa_fechayhora`, `empresa_estado`) VALUES
-(1, 'CRALM GROUP E.I.R.L.', 'CRALM GROUP E.I.R.L.', 'Distribuidores de Combustibles, Lubricantes y Servicios de Transportes Fluviales', '20609569752', 'CAL.ESTADO DE ISRAEL NRO. 256 URB. VIRGEN DE LORETO', 'PE', 'LORETO', 'MAYNAS', 'IQUITOS', '160101', '902181954', NULL, '902181954', NULL, NULL, 'carretero.group@gmail.com', 'CRALMRUI', 'Group_2023', '531e8960-b853-4244-b14b-64573b18aafa', 'jKFPQrMylULyOiKfwfY7fw==', '2022-01-23 17:16:47', 1);
+(1, 'BUFEO TEC S.A.C.', 'BUFEO TEC S.A.C.', 'Distribuidores de Combustibles, Lubricantes y Servicios de Transportes Fluviales', '20604352429', 'CAL.SIEMPRE VIVA 234', 'PE', 'LORETO', 'MAYNAS', 'IQUITOS', '160101', '969902084', NULL, '969902084', NULL, NULL, 'contacto@bufeotec.com', 'CRALMRUI', 'Group_2023', '531e8960-b853-4244-b14b-64573b18aafa', 'jKFPQrMylULyOiKfwfY7fw==', '2022-01-23 17:16:47', 1);
 
 -- --------------------------------------------------------
 
@@ -339,8 +346,7 @@ CREATE TABLE `familias` (
 --
 
 INSERT INTO `familias` (`id_familia`, `id_usuario`, `familia_nombre`, `familia_fecha_registro`, `familia_estado`) VALUES
-(1, 1, 'CRALM GROUP', '2022-01-26 18:01:40', 1),
-(2, 1, 'PISCO CARRETERO', '2022-01-26 18:01:40', 1);
+(1, 1, 'GENERAL', '2022-01-26 18:01:40', 1);
 
 -- --------------------------------------------------------
 
@@ -601,7 +607,7 @@ INSERT INTO `menus` (`id_menu`, `menu_nombre`, `menu_controlador`, `menu_icono`,
 (14, 'Clientes', 'Clientes', 'fa fa-child', 1, 1, 1),
 (15, 'Reportes', 'Reporte', 'fa fa-calendar-minus-o', 14, 1, 1),
 (16, 'Cajas', 'Caja', 'fa fa-cc-visa', 5, 0, 1),
-(17, 'Proforma', 'Proforma', 'fa fa-folder-open-o', 15, 1, 1),
+(17, 'Proforma', 'Proforma', 'fa fa-folder-open-o', 15, 0, 0),
 (18, 'Categorias', 'Categorias', 'fa fa-file-archive-o', 10, 1, 1);
 
 -- --------------------------------------------------------
@@ -894,9 +900,10 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_usuario`, `producto_codigo_barra`, `producto_nombre`, `producto_descripcion`, `producto_stock`, `producto_creacion`, `producto_estado`, `producto_codigo`) VALUES
-(1, 1, 1, NULL, 'GASOLINA', '', -79161.94, '2023-10-31 20:02:08', 1, '1698800528.7718'),
-(2, 1, 1, NULL, 'DIESEL', '', -14744.76, '2023-10-31 20:02:20', 1, '1698800540.6883'),
-(3, 2, 1, NULL, 'ACEITE', '', -2326.5, '2023-10-31 20:02:34', 1, '1698800554.7311');
+(1, 1, 1, NULL, 'GASOLINA', '', -179457.29, '2023-10-31 20:02:08', 1, '1698800528.7718'),
+(2, 1, 1, NULL, 'DIESEL', '', -48612.92, '2023-10-31 20:02:20', 1, '1698800540.6883'),
+(3, 2, 1, NULL, 'ACEITE', '', -6241.5, '2023-10-31 20:02:34', 1, '1698800554.7311'),
+(9, 1, 1, NULL, 'GASOLINA 95', '', NULL, '2025-10-19 23:28:50', 1, '1760934530.5668');
 
 -- --------------------------------------------------------
 
@@ -933,7 +940,8 @@ INSERT INTO `producto_precio` (`id_producto_precio`, `id_talla`, `id_proveedor`,
 (15, 16, 1, 58, '20', 265.00, 265.00, NULL, 1),
 (16, 17, 1, 58, '20', 16.00, 16.00, NULL, 1),
 (17, 18, 1, 58, '20', 16.00, 16.00, NULL, 1),
-(18, 19, 1, 58, '20', 16.00, 16.00, NULL, 1);
+(18, 19, 1, 58, '20', 16.00, 16.00, NULL, 1),
+(19, 20, 1, 58, '20', 14.00, 15.00, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1173,7 +1181,7 @@ CREATE TABLE `serie` (
 INSERT INTO `serie` (`id_serie`, `tipocomp`, `serie`, `correlativo`, `estado`) VALUES
 (1, '01', 'FG01', 0, 1),
 (2, '01', 'FG02', 0, 0),
-(3, '03', 'BG01', 0, 1),
+(3, '03', 'BG01', 1, 1),
 (5, '07', 'FN01', 0, 1),
 (6, '07', 'BN01', 0, 1),
 (7, '08', 'FD01', 0, 1),
@@ -1260,7 +1268,7 @@ CREATE TABLE `talla` (
 
 INSERT INTO `talla` (`id_talla`, `id_usuario`, `id_producto`, `talla_nombre`, `talla_codigo_barra`, `talla_stock`, `talla_fecha_registro`, `talla_estado`, `talla_microtime`) VALUES
 (1, 1, 1, '84', '', 999.00, '2023-10-31 21:06:11', 0, '1698804371.7473'),
-(3, 1, 1, '84 OCT', '', -176499.33, '2023-11-02 10:05:29', 1, '1698937529.0178'),
+(3, 1, 1, '84 OCT', '', -176514.33, '2023-11-02 10:05:29', 1, '1698937529.0178'),
 (4, 1, 2, 'B5 UV', '', -48612.92, '2023-11-02 10:06:43', 1, '1698937603.0836'),
 (5, 1, 3, 'MOBIL AUTOBOARD LITRO UND', '', -4236.50, '2023-11-02 10:07:20', 1, '1698937640.9145'),
 (12, 1, 1, '84 OCT LUBRICADA', '', -1067.96, '2024-03-20 12:07:00', 1, '1710954420.9948'),
@@ -1270,7 +1278,8 @@ INSERT INTO `talla` (`id_talla`, `id_usuario`, `id_producto`, `talla_nombre`, `t
 (16, 1, 3, 'ACEITE SAE-50 BALDE', '', -30.00, '2024-07-04 09:46:04', 1, '1720104364.7274'),
 (17, 1, 1, 'REGULAR', '', -1875.00, '2024-07-11 16:51:02', 1, '1720734662.6946'),
 (18, 1, 1, 'REGULAR LUBRICADA', '', 0.00, '2024-07-11 16:51:19', 1, '1720734679.7807'),
-(19, 1, 1, 'PREMIUM', '', 0.00, '2024-07-11 16:51:46', 1, '1720734706.352');
+(19, 1, 1, 'PREMIUM', '', 0.00, '2024-07-11 16:51:46', 1, '1720734706.352'),
+(20, 1, 9, 'GENERAL', '', 1000.00, '2025-10-19 23:29:47', 1, '1760934587.1392');
 
 -- --------------------------------------------------------
 
@@ -3436,7 +3445,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `id_rol`, `usuario_nickname`, `usuario_contrasenha`, `usuario_email`, `usuario_imagen`, `usuario_estado`, `usuario_creacion`, `usuario_ultimo_login`, `usuario_ultima_modificacion`) VALUES
-(1, 1, 2, 'superadmin', '$2y$10$elD/i5CNM42fOni67dxrZuIbwfTmJo5LGkExhr29g1P2sDx7VUhHm', 'cesarjose@bufeotec.com', 'media/usuarios/usuario.jpg', 1, '2020-09-17 00:00:00', '2025-10-18 15:35:14', '2020-09-17 00:00:00'),
+(1, 1, 2, 'superadmin', '$2y$10$6p4UUe8DnBLGpqXEEMSM0.TBFEXMcM1m3ZalfAK6eBS6BUaACCnS2', 'cesarjose@bufeotec.com', 'media/usuarios/usuario.jpg', 1, '2020-09-17 00:00:00', '2025-10-19 22:04:06', '2020-09-17 00:00:00'),
 (2, 2, 3, 'admin', '$2y$10$oPOOOgTUr4zIh511ATm/q.vzsAmxP.e2.vzyEbRn/1pzyWz2oXj0a', 'carlos@gmail.com', 'media/usuarios/usuario.jpg', 1, '2020-10-27 18:29:10', '2025-07-26 11:20:09', '2020-10-27 18:29:10'),
 (4, 4, 6, 'cajero', '$2y$10$oPOOOgTUr4zIh511ATm/q.vzsAmxP.e2.vzyEbRn/1pzyWz2oXj0a', 'cajero@ejemplo.com', 'media/usuarios/usuario.jpg', 1, '2021-05-25 10:48:44', '2025-10-18 13:08:16', '2024-02-20 20:05:06'),
 (5, 5, 4, 'dayli', '$2y$10$mbleiWM/vA.c81glNPn.uOR/K2V6s.xNUjEgxcjtJnXkUlDwhK6Hm', 'dayli@gmail.com', 'media/usuarios/usuario.jpg', 1, '2022-04-12 17:37:06', '2022-07-09 08:22:20', '2024-05-02 09:22:58'),
@@ -3495,6 +3504,13 @@ CREATE TABLE `ventas` (
   `venta_forma_pago` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT 'CONTADO',
   `venta_guia` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`id_venta`, `id_caja`, `id_empresa`, `id_usuario`, `id_cliente`, `id_turno`, `id_tipo_pago`, `id_moneda`, `venta_condicion_resumen`, `venta_tipo_envio`, `venta_direccion`, `venta_tipo`, `venta_serie`, `venta_correlativo`, `venta_descuento_global`, `venta_totalgratuita`, `venta_totalexonerada`, `venta_totalinafecta`, `venta_totalgravada`, `venta_totaligv`, `venta_incluye_igv`, `venta_totaldescuento`, `venta_icbper`, `venta_total`, `venta_pago_cliente`, `venta_vuelto`, `venta_fecha`, `venta_observacion`, `tipo_documento_modificar`, `serie_modificar`, `correlativo_modificar`, `venta_codigo_motivo_nota`, `venta_estado_sunat`, `venta_fecha_envio`, `venta_rutaXML`, `venta_rutaCDR`, `venta_respuesta_sunat`, `venta_fecha_de_baja`, `anulado_sunat`, `venta_cancelar`, `venta_estado`, `id_usuario_cobro`, `venta_nota_dato`, `venta_forma_pago`, `venta_guia`) VALUES
+(1, 1, 1, 1, 1, 1, 3, 1, 1, 0, NULL, '03', 'BG01', '1', 0.00, 0.00, 228.00, 0.00, 0.00, 0.00, 1, 0.00, 0.00, 228.00, 0.00, 0.00, '2025-10-19 23:23:04', NULL, '', '', '', '', 0, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 1, '', 'CONTADO', 0);
 
 -- --------------------------------------------------------
 
@@ -3561,6 +3577,13 @@ CREATE TABLE `ventas_detalle` (
   `venta_detalle_importe_total` decimal(10,2) NOT NULL DEFAULT '0.00',
   `venta_detalle_descuento` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `ventas_detalle`
+--
+
+INSERT INTO `ventas_detalle` (`id_venta_detalle`, `id_venta`, `id_producto_precio`, `venta_detalle_valor_unitario`, `venta_detalle_precio_unitario`, `venta_detalle_nombre_producto`, `venta_detalle_cantidad`, `venta_detalle_total_igv`, `venta_detalle_porcentaje_igv`, `venta_detalle_valor_total`, `venta_detalle_importe_total`, `venta_detalle_descuento`) VALUES
+(1, 1, 3, 15.200000, 15.200000, 'GASOLINA 84 OCT', 15, 0.00, 0.00, 228.00, 228.00, 0.00);
 
 --
 -- Índices para tablas volcadas
@@ -3891,7 +3914,7 @@ ALTER TABLE `ventas_detalle`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `id_caja` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_caja` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `caja_numero`
@@ -4011,13 +4034,13 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_producto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_precio`
 --
 ALTER TABLE `producto_precio`
-  MODIFY `id_producto_precio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_producto_precio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_venta`
@@ -4089,7 +4112,7 @@ ALTER TABLE `stockout`
 -- AUTO_INCREMENT de la tabla `talla`
 --
 ALTER TABLE `talla`
-  MODIFY `id_talla` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_talla` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_documentos`
@@ -4143,7 +4166,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas_anulados`
@@ -4161,7 +4184,7 @@ ALTER TABLE `ventas_cuotas`
 -- AUTO_INCREMENT de la tabla `ventas_detalle`
 --
 ALTER TABLE `ventas_detalle`
-  MODIFY `id_venta_detalle` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta_detalle` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

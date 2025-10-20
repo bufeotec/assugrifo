@@ -40,11 +40,11 @@ $pdf->SetWidths(array(105,16,22,22));
 $total_ = 0;
 $pdf->SetFont('Arial','',8);
 foreach ($listar_pdf as $lp) {
-    if($lp->proforma_detalle_mm == 1){
+    /*if($lp->proforma_detalle_mm == 1){
         $ver = "PISCO";
     }else{
         $ver = "PISCO";
-    }
+    }*/
     $total = $lp->proforma_detalle_producto_cantidad * $lp->proforma_detalle_precio;
     //$pdf->Row(array($ver,$lp->proforma_detalle_nombre_producto,$lp->proforma_detalle_producto_cantidad,'S/. '.$lp->proforma_detalle_precio,'S/. '.number_format($total,2)));
     $pdf->Row(array($lp->proforma_detalle_nombre_producto,$lp->proforma_detalle_producto_cantidad,'S/. '.$lp->proforma_detalle_precio,'S/. '.number_format($total,2)));

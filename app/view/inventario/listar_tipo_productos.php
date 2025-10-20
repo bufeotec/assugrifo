@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="recurso">Denomicación</label>
+                            <label for="recurso">Denominación</label>
                             <input type="text" onkeyup="mayuscula(this.id)" id="talla_nombre" class="form-control" name="talla_nombre" maxlength="100">
                         </div>
                         <div class="col-md-2">
@@ -94,7 +94,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 col-6">
-                            <label for="recurso">Denomicación</label>
+                            <label for="recurso">Denominación</label>
                             <input type="hidden" id="id_talla" name="id_talla">
                             <input type="hidden" id="id_producto" class="form-control" name="id_producto" value="<?= $id;?>">
                             <input type="text" onkeyup="mayuscula(this.id)" id="talla_nombre_" class="form-control" name="talla_nombre_" maxlength="100">

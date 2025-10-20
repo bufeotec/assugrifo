@@ -30,10 +30,10 @@
         <div class="wrap-login100 p-t-190 p-b-30">
             <div class="login100-form validate-form">
                 <div class="login100-form-avatar">
-                    <img src="<?=_SERVER_;?>media/logo/logo_cralm_fondo.png" alt="Logo de Proyecto">
+                    <img src="<?=_SERVER_ . _LOGO_LOGIN;?>" alt="Logo de Proyecto">
                 </div>
 
-                <span class="login100-form-title p-t-20 p-b-45" style="color: black">CRALM GROUP</span>
+                <span class="login100-form-title p-t-20 p-b-45" style="color: black"><?= _TITLE_;?></span>
 
                 <div class="wrap-input100 validate-input m-b-10">
                     <input class="input100" type="text" name="usuario_nickname" id="usuario_nickname" placeholder="Usuario">

@@ -20,9 +20,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-6 align-middle">
                             <div class="row">
-                                <div class=" col-lg-3" ><img style="margin-top: 5px; margin-left: 130px" src="<?= _SERVER_ ?>media/logo/logo_cralm.png" width="50%"></div>
+                                <div class=" col-lg-3" ><img style="margin-top: 5px; margin-left: 130px" src="<?= _SERVER_._LOGO_GENERAL; ?>" width="50%"></div>
                                 <div class="col-lg-6 text-right mt-2 " style="border-left: 3px solid #e5e8e8>
-                        <label style=">CRALM GROUP E.I.R.L.
+                        <label style="><?= _EMPRESA_?>
                                     <label style="font-weight: 500">RUC 20609569752</label></div>
 
                             </div>

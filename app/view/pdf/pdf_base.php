@@ -10,18 +10,18 @@ class PDF extends FPDF{
         //Mover
         $this->Cell(30);
         //Titulo
-        $this->Cell(130,10,'CRALM GROUP E.I.R.L.',0,1,'C');
+        $this->Cell(130,10,_EMPRESA_,0,1,'C');
         $this->SetFont('Arial','B',12);
-        $this->Cell(190,10,'RUC: 20600937953',0,1,'C');
+        $this->Cell(190,10,'RUC: ' . _RUC_,0,1,'C');
         //$this->SetFont('Arial','B',12);
         //$this->Cell(190,10,'PROFORMA DE VENTA',0,1,'C');
         $this->SetFont('Arial','B',12);
-        $this->Cell(190,10,'CAL.ESTADO DE ISRAEL NRO. 256 LORETO - MAYNAS - IQUITOS',0,1,'C');
+        $this->Cell(190,10,_DIRECCION_,0,1,'C');
         $this->SetFont('Arial','B',12);
-        $this->Cell(190,10,'LORETO - MAYNAS - IQUITOS',0,1,'C');
+        $this->Cell(190,10,_DIRECCION_UBI_,0,1,'C');
         $this->SetFont('Arial','B',12);
         $this->Cell(190,10,'---------------------------------------------------------------------------------------------------------------------------',0,0,'C');
-        $this->Image('media/logo/logo_cralm.png',16,7,25);
+        $this->Image(_LOGO_GENERAL,16,7,25);
         //Salto de linea
         $this->Ln();
     }

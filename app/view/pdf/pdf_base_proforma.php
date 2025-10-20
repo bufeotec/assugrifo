@@ -6,7 +6,7 @@ class PDF extends FPDF{
     //Cabecera de pagina
     function Header(){
         //Arial bold 15
-        $this->Image('media/logo/logo_cralm_chico.png',81,4,45,0);
+        $this->Image(_LOGO_GENERAL,81,4,45,0);
         $this->Cell(130,10,'',0,8,'C');
         $this->Ln();
         $this->Ln();
@@ -15,9 +15,9 @@ class PDF extends FPDF{
         //Mover
         $this->Cell(30);
         //Titulo
-        $this->Cell(130,7,'CRALM GROUP E.I.R.L.',0,1,'C');
+        $this->Cell(130,7,_EMPRESA_,0,1,'C');
         $this->SetFont('Arial','B',12);
-        $this->Cell(190,7,'RUC: 20609569752',0,1,'C');
+        $this->Cell(190,7,'RUC: ' . _RUC_,0,1,'C');
         $this->SetFont('Arial','B',12);
         $this->Cell(190,7,'CAL.ESTADO DE ISRAEL NRO. 256 LORETO - MAYNAS - IQUITOS',0,1,'C');
         $this->SetFont('Arial','B',12);

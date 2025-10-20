@@ -90,15 +90,20 @@ class AdminController{
             $ok_data = $this->validar->validar_parametro('caja_apertura', 'POST',true,$ok_data,200,'numero',0);
 
             if($ok_data) {
-                //Creamos el modelo y ingresamos los datos a guardar
-                $model = new Admin();
-                $model->caja_apertura = $_POST['caja_apertura'];
-                $model->id_caja_numero = $_POST['caja_numero'];
-                $model->id_usuario_apertura= $id_usuario_apertura;
-                $model->caja_estado= 1;
+                $apertura_caja = $this->admin->listar_ultima_fecha($_POST['caja_apertura']);
+                if(!$apertura_caja){
+                    //Creamos el modelo y ingresamos los datos a guardar
+                    $model = new Admin();
+                    $model->caja_apertura = $_POST['caja_apertura'];
+                    $model->id_caja_numero = $_POST['caja_numero'];
+                    $model->id_usuario_apertura= $id_usuario_apertura;
+                    $model->caja_estado= 1;
 
-                //Guardamos el menú y recibimos el resultado
-                $result = $this->admin->guardar_apertura_caja($model);
+                    //Guardamos el menú y recibimos el resultado
+                    $result = $this->admin->guardar_apertura_caja($model);
+                } else {
+                    $result = 1;
+                }
             }
 
         } catch (Throwable $e){

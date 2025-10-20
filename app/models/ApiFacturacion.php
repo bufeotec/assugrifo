@@ -30,9 +30,9 @@ class ApiFacturacion
         $result = 2; //result 2 es error y 1 es ok
 
         //$ruta_firma = $rutacertificado. 'certificado_20609569752.pfx';
-        $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
+        $ruta_firma = $rutacertificado. _CERTIFICADO_; //ruta del archivo del certicado para firmar
         //$pass_firma = 'CRALM256group';
-        $pass_firma = '12345678'; //contraseña del certificado
+        $pass_firma = _PASS_CERTI_; //contraseña del certificado
 
         $resp = $objfirma->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
         //print_r($resp);
@@ -64,8 +64,11 @@ class ApiFacturacion
             if($result == 1){
 
                 //ENVIAR EL ZIP A LOS WS DE SUNAT - INICIO
-                $ws = 'https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService'; //ruta del servicio web de pruebad e SUNAT para enviar documentos
-                //$ws = 'https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService'; //Modo produccion
+                if(_PROD_){
+                    $ws = 'https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService'; //Modo produccion
+                } else {
+                    $ws = 'https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService'; //ruta del servicio web de pruebad e SUNAT para enviar documentos
+                }
                 $ruta_archivo = $rutazip;
                 $nombre_archivo = $nombrezip;
 
@@ -222,9 +225,9 @@ class ApiFacturacion
         $ruta = $ruta_archivo_xml.$nombre.'.XML';
 
         //$ruta_firma = $rutacertificado. 'certificado_20609569752.pfx';
-        $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
+        $ruta_firma = $rutacertificado. _CERTIFICADO_; //ruta del archivo del certicado para firmar
         //$pass_firma = 'CRALM256group';
-        $pass_firma = '12345678'; //contraseña del certificado
+        $pass_firma = _PASS_CERTI_; //contraseña del certificado
 
         $resp = $objSignature->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);
         //print_r($resp); //hash
@@ -248,9 +251,12 @@ class ApiFacturacion
         $mensaje = "";
         if($result == 1){
             //Enviamos el archivo a sunat
-
-            $ws = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService";
-            //$ws = 'https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService'; //Modo produccion
+            if(_PROD_){
+                $ws = 'https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService'; //Modo produccion
+            } else {
+                $ws = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService";
+            }
+            //
 
 
             $ruta_archivo = $ruta_archivo_xml.$nombrezip;
@@ -355,8 +361,12 @@ class ApiFacturacion
     function ConsultarTicket($emisor, $cabecera, $ticket, $ruta_archivo_cdr, $tipo)
     {
         $objventa = new Ventas();
-        $ws = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService"; //modo beta
-        //$ws = "https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService"; //modo produccion
+        if(_PROD_){
+            $ws = "https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService"; //modo produccion
+        } else {
+            $ws = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService"; //modo beta
+        }
+
         $ruta_archivo_xml = "libs/ApiFacturacion/xml/";
         $nombre	= $emisor->empresa_ruc.'-'.$cabecera['tipocomp'].'-'.$cabecera['serie'].'-'.$cabecera['correlativo'];
         $nombre_xml	= $nombre.".XML";
@@ -367,10 +377,6 @@ class ApiFacturacion
         $flg_firma = "0";
         $ruta = $ruta_archivo_xml.$nombre_xml;
 
-        //$ruta_firma = $rutacertificado. 'certificado_202606136618.pfx';
-        //$ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
-        //$pass_firma = 'Firebufeo1';
-        $pass_firma = 'Group_2023'; //contraseña del certificado
 
         //===============================================================//
 
@@ -562,9 +568,9 @@ class ApiFacturacion
         $ruta = $ruta_archivo_xml.$nombre.'.XML';
 
         //$ruta_firma = $rutacertificado. 'certificado_20609569752.pfx';
-        $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
+        $ruta_firma = $rutacertificado. _CERTIFICADO_; //ruta del archivo del certicado para firmar
         //$pass_firma = 'CRALM256group';
-        $pass_firma = '12345678'; //contraseña del certificado
+        $pass_firma = _PASS_CERTI_; //contraseña del certificado
 
         $resp = $objSignature->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);//se firma el xml
         //print_r($resp); //hash
@@ -592,11 +598,15 @@ class ApiFacturacion
             //echo '</br>XML ZIPEADO';
             //CONVERTIR A ZIP - FIN
             if($result == 1){
-
+                if(_PROD_){
+                    $ws = 'https://e-guiaremision.sunat.gob.pe/ol-ti-itemision-guia-gem/billService';
+                } else {
+                    $ws = 'https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-beta/billService';
+                }
                 //ENVIAR EL ZIP A LOS WS DE SUNAT - INICIO
                 //https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-
-                //$ws = 'https://e-beta.sunat.gob.pe/ol-ti-itemision-guia-gem-beta/billService'; //ruta del servicio web de pruebad e SUNAT para enviar documentos
-                $ws = 'https://e-guiaremision.sunat.gob.pe/ol-ti-itemision-guia-gem/billService'; //Modo produccion
+                // //ruta del servicio web de pruebad e SUNAT para enviar documentos
+                ; //Modo produccion
                 $ruta_archivo = $rutazip;
                 $nombre_archivo = $nombrezip;
 
@@ -760,9 +770,9 @@ class ApiFacturacion
         $id_guia = $guia->id_guia;
 
         //$ruta_firma = $rutacertificado. 'certificado_20609569752.pfx';
-        $ruta_firma = $rutacertificado. 'certificado_prueba.pfx'; //ruta del archivo del certicado para firmar
+        $ruta_firma = $rutacertificado. _CERTIFICADO_; //ruta del archivo del certicado para firmar
         //$pass_firma = 'CRALM256group';
-        $pass_firma = '12345678'; //contraseña del certificado
+        $pass_firma = _PASS_CERTI_; //contraseña del certificado
 
         $resp = $objSignature->signature_xml($flg_firma, $ruta, $ruta_firma, $pass_firma);//se firma el xml
         //print_r($resp); //hash

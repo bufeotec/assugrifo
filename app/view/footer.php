@@ -10,7 +10,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="col-lg-12" style="text-align: center;display: none">
-            <img src="<?=_SERVER_;?>media/logo/logo_cralm.png" width="20%">
+            <img src="<?=_SERVER_._LOGO_GENERAL;?>" width="20%">
         </div>
         <div class="copyright text-center my-auto">
 

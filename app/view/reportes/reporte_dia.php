@@ -63,7 +63,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h4 style="text-align: center; color: blue">REPORTE CRALM GROUP</h4>
+                <h4 style="text-align: center; color: blue">REPORTE <?= _EMPRESA_;?></h4>
                 <table class="table table-bordered table-hover" style="border-color: black">
                     <thead>
                     <tr style="background-color: #ebebeb">
@@ -210,7 +210,7 @@
         <br>
         <div class="row">
             <div class="col-lg-12">
-                <h4 style="text-align: center;color: blue">REPORTE PISCO CARRETERO</h4>
+                <h4 style="text-align: center;color: blue">REPORTE .<?= _EMPRESA_;?></h4>
                 <table class="table table-bordered table-hover" style="border-color: black">
                     <thead>
                     <tr style="background-color: #ebebeb">

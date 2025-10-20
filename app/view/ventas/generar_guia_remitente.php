@@ -20,9 +20,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-6 align-middle">
                             <div class="row">
-                                <div class=" col-lg-3" ><img style="margin-top: 5px; margin-left: 130px" src="<?= _SERVER_ ?>media/logo/logo_cralm.png" width="50%"></div>
+                                <div class=" col-lg-3" ><img style="margin-top: 5px; margin-left: 130px" src="<?= _SERVER_ . _LOGO_GENERAL;?>" width="50%"></div>
                                 <div class="col-lg-6 text-right mt-2 " style="border-left: 3px solid #e5e8e8>
-                        <label style=">CRALM GROUP E.I.R.L.
+                        <label style="><?= _EMPRESA_;?>
                                     <label style="font-weight: 500">RUC 20609569752</label></div>
 
                             </div>
@@ -129,8 +129,8 @@
                                     <option value="0">NO DOMICIALIADO</option>-->
                                 </select>
                             </td>
-                            <td><input type="text" id="destinatario_nombre" class="form-control" value="20609569752"></td>
-                            <td><input type="text" id="destinatario_ruc" class="form-control" value="CRALM GROUP E.I.R.L."></td>
+                            <td><input type="text" id="destinatario_nombre" class="form-control" value="<?= _RUC_;?>"></td>
+                            <td><input type="text" id="destinatario_ruc" class="form-control" value="<?= _EMPRESA_;?>"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -412,8 +412,8 @@
             $('#datos_destinatario').hide();
 
             $('#id_doc_destinatario').val(6);
-            $('#destinatario_nombre').val('20609569752');
-            $('#destinatario_ruc').val('CRALM GROUP E.I.R.L.');
+            $('#destinatario_nombre').val('<?= _EMPRESA_;?>');
+            $('#destinatario_ruc').val('<?= _RUC_;?>');
         } else {
             $('#datos_proveedor').hide();
             $('#datos_destinatario').show();

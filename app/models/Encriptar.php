@@ -13,17 +13,19 @@ class Encriptar{
     //Funcion que se encarga de ENCRIPTAR el texto entrante
     public function encriptar($string, $key) {
         $result = '';
-        //Recorremos todo el string recibido
-        for($i=0; $i < strlen($string); $i++) {
-            //Extraemos el caracter del string que vamos a encriptar
-            $char = substr($string, $i, 1);
-            //Extraemos un caracter de nuestra llave
-            $keychar = substr($key, ($i % strlen($key)) - 1, 1);
-            //Convertirmos $char y $keychar a un valor entre 0 y 255, y luego lo sumamos
-            //para obtener un valor que usaremos con la funcion chr para obtener un valor ASCII especifico
-            $char = chr(ord($char) + ord($keychar));
-            //Aumentamos el valor de $char a nuestro result
-            $result .= $char;
+        if(!empty($string)){
+            //Recorremos todo el string recibido
+            for($i=0; $i < strlen($string); $i++) {
+                //Extraemos el caracter del string que vamos a encriptar
+                $char = substr($string, $i, 1);
+                //Extraemos un caracter de nuestra llave
+                $keychar = substr($key, ($i % strlen($key)) - 1, 1);
+                //Convertirmos $char y $keychar a un valor entre 0 y 255, y luego lo sumamos
+                //para obtener un valor que usaremos con la funcion chr para obtener un valor ASCII especifico
+                $char = chr(ord($char) + ord($keychar));
+                //Aumentamos el valor de $char a nuestro result
+                $result .= $char;
+            }
         }
         //Codificamos la cadena a base64 y la devolvemos
         return base64_encode($result);

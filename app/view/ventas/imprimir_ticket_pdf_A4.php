@@ -19,7 +19,7 @@ $pdf = new FPDF('P');
 $pdf->AddPage();
 //CABECERA DEL ARCHIVO
 //Logo
-$pdf->Image(_SERVER_.'media/logo/logo_cralm.png',40,10, '35', '25', 'png');
+$pdf->Image(_SERVER_._LOGO_GENERAL,40,10, '35', '25', 'png');
 
 $pdf->Ln(5);
 $pdf->SetFillColor(220,220,220);

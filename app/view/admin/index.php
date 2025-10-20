@@ -127,7 +127,7 @@ switch ($mes){
             <div class="card">
                 <div style="background-image: url(<?= _SERVER_.'media/logo/1.jpg'?>)">
                     <div class="card-body text-center font-weight-bold text-white" style="background: rgba(242, 144, 57, 0.85)">
-                        <h5><b>Bienvenido a CRALM GROUP E.I.R.L.</b></h5>
+                        <h5><b>Bienvenido a <?= _EMPRESA_;?></b></h5>
                     </div>
                 </div>
 
@@ -204,7 +204,7 @@ switch ($mes){
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <div class="lds-dual-ring text-center" style="background: url(<?= _SERVER_.'media/logo/logo_cralm_fondo.png'?>) no-repeat;background-size: cover; display: flex; align-items: center">
+                                        <div class="lds-dual-ring text-center" style="background: url(<?= _SERVER_._LOGO_GENERAL?>) no-repeat;background-size: cover; display: flex; align-items: center">
 
                                         </div>
 <!--                                    <div class=" circulo_r"  style="background: transparent; width: 120px;border: 3px dotted rgba(24,35,51,0.6); height: 120px; border-radius: 70px; display: flex;align-items: center">

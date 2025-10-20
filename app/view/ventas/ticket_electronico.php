@@ -41,7 +41,7 @@ $printer->setJustification(Printer::JUSTIFY_CENTER);
 	el logo
 */
 try{
-    $logo = EscposImage::load("media/logo/logo_cralm_chico", false);
+    $logo = EscposImage::load(_LOGO_TICKETERA, false);
     $printer->bitImage($logo);
 }catch(Exception $e){/*No hacemos nada si hay error*/}
 /*

@@ -37,7 +37,7 @@ class Admin{
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$fecha_hoy]);
             $result = $stm->fetchAll();
-            if(count($result) == 1){
+            if(count($result) > 0){
                 $result = true;
             } else {
                 $result = false;

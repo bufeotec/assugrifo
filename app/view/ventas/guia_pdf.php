@@ -7,12 +7,12 @@ $pdf->AddPage();
 //Define el marcador de posición usado para insertar el número total de páginas en el documento
 $pdf->AliasNbPages();
 
-$pdf->Image(_SERVER_.'media/logo/logo_cralm.png',1,1, '60', '45', 'png');
+$pdf->Image(_SERVER_._LOGO_GENERAL,1,1, '60', '45', 'png');
 $pdf->SetFont('Helvetica','',7);
 $pdf->Cell(120,0,'','',0);
 $pdf->Cell(75,0,'','T',1,'R');
 $pdf->SetFont('Helvetica','B',14);
-$pdf->Cell(100,12, "CRALM GROUP E.I.R.L.",0,0,'R',0);
+$pdf->Cell(100,12, _EMPRESA_,0,0,'R',0);
 $pdf->Cell(20);
 $pdf->SetFont('Helvetica','B',10);
 $pdf->SetFillColor(220,220,220);

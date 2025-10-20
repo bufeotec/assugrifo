@@ -27,7 +27,7 @@ if($filas_detalle==1 || $filas_detalle==2){
 $pdf->AddPage();
 //CABECERA DEL ARCHIVO
 //Logo
-$pdf->Image('media/logo/logo_cralm_chico.png',31.1,6, '17', '17', 'png');
+$pdf->Image(_LOGO_TICKETERA,31.1,6, '17', '17', 'png');
 $pdf->Ln(15);
 
 $pdf->SetFont('Helvetica','',9);
@@ -37,7 +37,7 @@ $pdf->SetFont('Helvetica','',9);
 //$pdf->Cell(60,4, "DESARROLLO HUMANO",0,1,'C',0);
 $pdf->SetFont('Helvetica','',7);
 //$pdf->Cell(60,4,"$dato_pago->empresa_nombre",0,1,'C');
-$pdf->Cell(60,4, "CRALM GROUP E.I.R.L.",0,1,'C',0);
+$pdf->Cell(60,4, _EMPRESA_,0,1,'C',0);
 //$pdf->Cell(60,4, "DESARROLLO HUMANO",0,1,'C',0);
 $pdf->Cell(60,4,"RUC Nº $dato_venta->empresa_ruc",0,1,'C');
 $pdf->SetFont('Helvetica','',7);
