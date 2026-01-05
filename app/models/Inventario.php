@@ -1121,7 +1121,7 @@ class Inventario{
     }
     public function stock_movimientos_talla($id_talla, $fecha_inicio, $fecha_fin){
         try{
-            $sql = 'select * from ventas v inner join ventas_detalle vd on v.id_venta = vd.id_venta inner join producto_precio pp on vd.id_producto_precio = pp.id_producto_precio inner join talla t on pp.id_talla = t.id_talla where pp.id_talla = ? and v.venta_cancelar = 1 and v.anulado_sunat = 0 and vd.venta_detalle_stock = 1 and date(v.venta_fecha) between ? and ? order by v.venta_fecha asc';
+            $sql = 'select v.*, vd.*,pp.*,t.id_talla, t.id_producto,t.talla_nombre,t.talla_stock from ventas v inner join ventas_detalle vd on v.id_venta = vd.id_venta inner join producto_precio pp on vd.id_producto_precio = pp.id_producto_precio inner join talla t on pp.id_talla = t.id_talla where pp.id_talla = ? and v.venta_cancelar = 1 and v.anulado_sunat = 0 and vd.venta_detalle_stock = 1 and date(v.venta_fecha) between ? and ? order by v.venta_fecha asc';
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_talla, $fecha_inicio, $fecha_fin]);
             $result = $stm->fetchAll();
