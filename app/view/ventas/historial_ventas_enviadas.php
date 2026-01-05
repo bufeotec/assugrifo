@@ -38,6 +38,7 @@
                                         <option <?= ($tipo_venta == "")?'selected':''; ?> value="">Seleccionar...</option>
                                         <option <?= ($tipo_venta == "03")?'selected':''; ?> value="03">BOLETA</option>
                                         <option <?= ($tipo_venta == "01")?'selected':''; ?> value="01">FACTURA</option>
+                                        <option <?= ($tipo_venta == "10")?'selected':''; ?> value= "10">NOTA DE VENTA</option>
                                         <option <?= ($tipo_venta == "07")?'selected':''; ?> value= "07">NOTA DE CRÉDITO</option>
                                         <option <?= ($tipo_venta == "08")?'selected':''; ?> value= "08">NOTA DE DÉBITO</option>
                                     </select>
@@ -76,161 +77,178 @@
                 <div class="card shadow mb-4">
                     <?php
                     if($filtro) {
-                        ?>
-                        <div class="card-header py-3">
-                            <h5>TIPO COMPROBANTE: <span class='text-uppercase font-weight-bold'>
+                    ?>
+                    <div class="card-header py-3">
+                        <h5>TIPO COMPROBANTE: <span class='text-uppercase font-weight-bold'>
                                     <?php
-                            if($tipo_venta == "03"){
-                                echo "BOLETA";
-                            }elseif($tipo_venta == "01"){
-                                echo "FACTURA";
-                            }elseif($tipo_venta == "07"){
-                                echo "NOTA DE CRÉDITO";
-                            }elseif($tipo_venta == "08"){
-                                echo "NOTA DE DÉBITO";
-                            }else{
-                                echo 'TODOS';
-                            }
-                            ?></span>
-                                | FECHA DEL: <span><?= (($fecha_ini != ""))?date('d-m-Y', strtotime($fecha_ini)):'--'; ?></span> AL <span><?= (($fecha_fin != ""))?date('d-m-Y', strtotime($fecha_fin)):'--'; ?></span>
-                                | Total SOLES: <span id="total_soles"></span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless table-striped table-earning" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="text-capitalize">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Fecha de Emision</th>
-                                        <th>Tipo de Envío</th>
-                                        <th>Comprobante</th>
-                                        <th>Serie y Correlativo</th>
-                                        <th>Cliente</th>
-                                        <th>Forma de Pago</th>
-                                        <th>Total</th>
-                                        <th>PDF</th>
-                                        <th>XML</th>
-                                        <th>CDR</th>
-                                        <th>Estado Sunat</th>
-                                        <th>Acción</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $a = 1;
-                                    $total = 0;
-                                    $total_soles = 0;
-                                    foreach ($ventas as $al){
-                                        $stylee="style= 'text-align: center;'";
-                                        if ($al->anulado_sunat == 1){
-                                            $stylee="style= 'text-align: center; background: #F98892'";
-                                        }
+                                    if($tipo_venta == "03"){
+                                        echo "BOLETA";
+                                    }elseif($tipo_venta == "01"){
+                                        echo "FACTURA";
+                                    }elseif($tipo_venta == "07"){
+                                        echo "NOTA DE CRÉDITO";
+                                    }elseif($tipo_venta == "08"){
+                                        echo "NOTA DE DÉBITO";
+                                    }elseif($tipo_venta == "10"){
+                                        echo "NOTA DE VENTA";
+                                    }else{
+                                        echo 'TODOS';
+                                    }
+                                    ?></span>
+                            | FECHA DEL: <span><?= (($fecha_ini != ""))?date('d-m-Y', strtotime($fecha_ini)):'--'; ?></span> AL <span><?= (($fecha_fin != ""))?date('d-m-Y', strtotime($fecha_fin)):'--'; ?></span>
+                            | Total SOLES: <span id="total_soles"></span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped table-earning" id="dataTable" width="100%" cellspacing="0">
+                                <thead class="text-capitalize">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha de Emision</th>
+                                    <th>Tipo de Envío</th>
+                                    <th>Comprobante</th>
+                                    <th>Serie y Correlativo</th>
+                                    <th>Cliente</th>
+                                    <th>Forma de Pago</th>
+                                    <th>Total</th>
+                                    <th>PDF</th>
+                                    <th>XML</th>
+                                    <th>CDR</th>
+                                    <th>Estado Sunat</th>
+                                    <th>Acción</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $a = 1;
+                                $total = 0;
+                                $total_soles = 0;
+                                foreach ($ventas as $al){
+                                    $stylee="style= 'text-align: center;'";
+                                    if ($al->anulado_sunat == 1){
+                                        $stylee="style= 'text-align: center; background: #F98892'";
+                                    }
 
-                                        if($al->venta_tipo == "03"){
-                                            $tipo_comprobante = "BOLETA";
-                                            if($al->anulado_sunat == 0){
-                                                $total_soles = round($total_soles + $al->venta_total, 2);
-                                            }
-                                        }elseif ($al->venta_tipo == "01"){
-                                            $tipo_comprobante = "FACTURA";
-                                            if($al->anulado_sunat == 0){
-                                                $total_soles = round($total_soles + $al->venta_total, 2);
-                                            }
-                                        }elseif($al->venta_tipo == "07"){
-                                            $tipo_comprobante = "NOTA DE CRÉDITO";
-                                            /*if(($al->anulado_sunat == 0 AND $al->venta_codigo_motivo_nota != "01")){
-                                                $total_soles = round($total_soles - $al->venta_total, 2);
-                                            }*/
-                                        }elseif($al->venta_tipo == "08"){
-                                            $tipo_comprobante = "NOTA DE DÉBITO";
-                                            if($al->anulado_sunat == 0){
-                                                $total_soles = round($total_soles + $al->venta_total, 2);
-                                            }
-                                        }else{
-                                            $tipo_comprobante = "--";
+                                    if($al->venta_tipo == "03"){
+                                        $tipo_comprobante = "BOLETA";
+                                        if($al->anulado_sunat == 0){
+                                            $total_soles = round($total_soles + $al->venta_total, 2);
                                         }
-                                        if($al->venta_tipo_envio == 1){
-                                            $tipo_envio = "DIRECTO";
-                                        }else{
-                                            $resumen = $this->ventas->listar_resumen_diario_x_id_venta($al->id_venta);
-                                            $tipo_envio = "<a type=\"button\" target='_blank' href="._SERVER_.'Ventas/ver_detalle_resumen/'.$resumen->id_envio_resumen.">RESUMEN DIARIO</a>";
-                                            //$tipo_envio = "RESUMEN DIARIO";
+                                    }elseif ($al->venta_tipo == "01"){
+                                        $tipo_comprobante = "FACTURA";
+                                        if($al->anulado_sunat == 0){
+                                            $total_soles = round($total_soles + $al->venta_total, 2);
                                         }
-                                        $estilo_mensaje = "";
-                                        if($al->venta_estado_sunat == 1){
-                                            if($al->venta_respuesta_sunat != ""){
-                                                $mensaje = $al->venta_respuesta_sunat;
-                                            }else{
+                                    }elseif($al->venta_tipo == "07"){
+                                        $tipo_comprobante = "NOTA DE CRÉDITO";
+                                        /*if(($al->anulado_sunat == 0 AND $al->venta_codigo_motivo_nota != "01")){
+                                            $total_soles = round($total_soles - $al->venta_total, 2);
+                                        }*/
+                                    }elseif($al->venta_tipo == "08"){
+                                        $tipo_comprobante = "NOTA DE DÉBITO";
+                                        if($al->anulado_sunat == 0){
+                                            $total_soles = round($total_soles + $al->venta_total, 2);
+                                        }
+                                    }elseif($al->venta_tipo == "10"){
+                                        $tipo_comprobante = "NOTA DE VENTA";
+                                        if($al->anulado_sunat == 0){
+                                            $total_soles = round($total_soles + $al->venta_total, 2);
+                                        }
+                                    }else{
+                                        $tipo_comprobante = "--";
+                                    }
+                                    if($al->venta_tipo_envio == 1){
+                                        $tipo_envio = "DIRECTO";
+                                    }else if($al->venta_tipo_envio == 2){
+                                        $resumen = $this->ventas->listar_resumen_diario_x_id_venta($al->id_venta);
+                                        $tipo_envio = "<a type=\"button\" target='_blank' href="._SERVER_.'Ventas/ver_detalle_resumen/'.$resumen->id_envio_resumen.">RESUMEN DIARIO</a>";
+                                        //$tipo_envio = "RESUMEN DIARIO";
+                                    } else {
+                                        $tipo_envio = "---";
+                                    }
+                                    $estilo_mensaje = "";
+                                    if($al->venta_estado_sunat == 1){
+                                        if($al->venta_respuesta_sunat != ""){
+                                            $mensaje = $al->venta_respuesta_sunat;
+                                        }else{
+                                            if($al->venta_tipo_envio == 2){
                                                 $mensaje = 'Aceptado por Resumen Diario';
+                                            } else {
+                                                $mensaje = 'No Aplica';
                                             }
-
-                                            $estilo_mensaje = "style= 'color: green; font-size: 14px;'";
-                                        }
-                                        if($al->id_tipodocumento == 4){
-                                            $cliente = $al->cliente_razonsocial;
-                                        }else{
-                                            $cliente = $al->cliente_nombre;
                                         }
 
+                                        $estilo_mensaje = "style= 'color: green; font-size: 14px;'";
+                                    }
+                                    if($al->id_tipodocumento == 4){
+                                        $cliente = $al->cliente_razonsocial;
+                                    }else{
+                                        $cliente = $al->cliente_nombre;
+                                    }
+
+                                    ?>
+                                    <tr <?= $stylee?>>
+                                        <td><?= $a;?></td>
+                                        <td><?= date('d-m-Y H:i:s', strtotime($al->venta_fecha));?></td>
+                                        <td><?= $tipo_envio;?></td>
+                                        <td><?= $tipo_comprobante;?></td>
+                                        <td><?= $al->venta_serie. '-' .$al->venta_correlativo;?></td>
+                                        <td>
+                                            <?= $al->cliente_numero;?><br>
+                                            <?= $cliente;?>
+                                        </td>
+                                        <td><?= $al->tipo_pago_nombre;?></td>
+                                        <td>
+                                            <?= $al->simbolo;?>
+                                            <?= $al->venta_total;?>
+                                        </td>
+                                        <td>
+                                            <center><a type="button" target='_blank' href="<?= _SERVER_ . 'Ventas/imprimir_ticket_pdf_A4/' . $al->id_venta ;?>" style="color: red" ><i class="fa fa-file-pdf-o"></i></a></center>
+                                            <!--<center><a type="button" target='_blank' href="<?= _SERVER_ . 'Ventas/imprimir_ticket_pdf/' . $al->id_venta ;?>" style="color: red" ><i class="fa fa-file-pdf-o"></i></a></center>-->
+                                        </td>
+                                        <?php
+                                        if($al->venta_tipo_envio == 1 && $al->venta_tipo != "10"){?>
+                                            <td>
+                                                <a type="button" target='_blank' href="<?= _SERVER_.$al->venta_rutaXML;?>" style="color: blue;" ><i class="fa fa-file-text"></i></a>
+                                                <a type="button" download="<?= $al->venta_rutaXML;?>" href="<?php echo _SERVER_ . $al->venta_rutaXML;?>" data-toggle="tooltip" title="Descargar"><i class="fa fa-download"></i></a>
+                                            </td>
+                                            <td><center><a type="button" target='_blank' href="<?= _SERVER_.$al->venta_rutaCDR;?>" style="color: green" ><i class="fa fa-file"></i></a></center></td>
+
+                                            <?php
+                                        }else{ ?>
+                                            <td>--</td>
+                                            <td>--</td>
+                                            <?php
+                                        }
                                         ?>
-                                        <tr <?= $stylee?>>
-                                            <td><?= $a;?></td>
-                                            <td><?= date('d-m-Y H:i:s', strtotime($al->venta_fecha));?></td>
-                                            <td><?= $tipo_envio;?></td>
-                                            <td><?= $tipo_comprobante;?></td>
-                                            <td><?= $al->venta_serie. '-' .$al->venta_correlativo;?></td>
-                                            <td>
-                                                <?= $al->cliente_numero;?><br>
-                                                <?= $cliente;?>
-                                            </td>
-                                            <td><?= $al->tipo_pago_nombre;?></td>
-                                            <td>
-                                                <?= $al->simbolo;?>
-                                                <?= $al->venta_total;?>
-                                            </td>
-                                            <td>
-                                                <center><a type="button" target='_blank' href="<?= _SERVER_ . 'Ventas/imprimir_ticket_pdf_A4/' . $al->id_venta ;?>" style="color: red" ><i class="fa fa-file-pdf-o"></i></a></center>
-                                                <!--<center><a type="button" target='_blank' href="<?= _SERVER_ . 'Ventas/imprimir_ticket_pdf/' . $al->id_venta ;?>" style="color: red" ><i class="fa fa-file-pdf-o"></i></a></center>-->
-                                            </td>
-                                            <?php
-                                            if($al->venta_tipo_envio == 1){?>
-                                                <td>
-                                                    <a type="button" target='_blank' href="<?= _SERVER_.$al->venta_rutaXML;?>" style="color: blue;" ><i class="fa fa-file-text"></i></a>
-                                                    <a type="button" download="<?= $al->venta_rutaXML;?>" href="<?php echo _SERVER_ . $al->venta_rutaXML;?>" data-toggle="tooltip" title="Descargar"><i class="fa fa-download"></i></a>
-                                                </td>
-                                                <td><center><a type="button" target='_blank' href="<?= _SERVER_.$al->venta_rutaCDR;?>" style="color: green" ><i class="fa fa-file"></i></a></center></td>
 
-                                                <?php
-                                            }else{ ?>
-                                                <td>--</td>
-                                                <td>--</td>
+                                        <td <?= $estilo_mensaje;?>><?= $mensaje;?></td>
+                                        <td style="text-align: left">
+                                            <a target="_blank" type="button" title="Ver detalle" class="btn btn-sm btn-primary" style="color: white" href="<?php echo _SERVER_. 'Ventas/ver_venta/' . $al->id_venta;?>" ><i class="fa fa-eye ver_detalle"></i></a>
                                             <?php
+                                            if($al->venta_tipo != "10"){
+                                                if($al->venta_guia==0){
+                                                    ?>
+                                                    <a target="_blank" href="<?= _SERVER_.'Ventas/generar_guia/'.$al->id_venta ?>" class="btn btn-warning"><i class="fa fa-file-pdf-o"></i> Generar Guia</a>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <a target="_blank" href="<?= _SERVER_.'Ventas/guia_pdf/'.$al->id_venta ?>"  class="btn btn-sm btn-danger"><i class="fa fa-file-pdf-o"></i> Imprimible</a>
+                                                    <?php
+                                                }
                                             }
                                             ?>
 
-                                            <td <?= $estilo_mensaje;?>><?= $mensaje;?></td>
-                                            <td style="text-align: left">
-                                                <a target="_blank" type="button" title="Ver detalle" class="btn btn-sm btn-primary" style="color: white" href="<?php echo _SERVER_. 'Ventas/ver_venta/' . $al->id_venta;?>" ><i class="fa fa-eye ver_detalle"></i></a>
-                                                <?php
-                                                if($al->venta_guia==0){
-                                                ?>
-                                                <a target="_blank" href="<?= _SERVER_.'Ventas/generar_guia/'.$al->id_venta ?>" class="btn btn-warning"><i class="fa fa-file-pdf-o"></i> Generar Guia</a>
-                                                <?php
-                                                }else{
-                                                    ?>
-                                                    <a target="_blank" href="<?= _SERVER_.'Ventas/guia_pdf/'.$al->id_venta ?>"  class="btn btn-sm btn-danger"><i class="fa fa-file-pdf-o"></i> Imprimible</a>
-                                                <?php }
-                                                ?>
+                                            <?php
 
-                                                <?php
-
-                                                if($al->anulado_sunat == 0){
-                                                    $date2 = new DateTime(date('Y-m-d H:i:s'));
-                                                    $date1 = new DateTime($al->venta_fecha_envio);
-                                                    $diff = $date2->diff($date1);
-                                                    $dias= $diff->days;
-                                                    if($dias <= 3){
+                                            if($al->anulado_sunat == 0){
+                                                $date2 = new DateTime(date('Y-m-d H:i:s'));
+                                                $date1 = new DateTime($al->venta_fecha_envio);
+                                                $diff = $date2->diff($date1);
+                                                $dias= $diff->days;
+                                                if($dias <= 3){
+                                                    if($al->venta_tipo != "10"){
                                                         if($al->venta_tipo != "03"){
                                                             if($al->tipo_documento_modificar != ""){
                                                                 if($al->tipo_documento_modificar == "01"){
@@ -251,26 +269,31 @@
                                                                 <?php
                                                             }
                                                         }
+                                                    } else {
+                                                        ?>
+                                                        <a target="_blank" type="button" title="Anular" id="btn_anular<?= $al->id_venta;?>" class="btn btn-sm btn-danger btne" style="color: white" onclick="preguntar('¿Está seguro que desea anular esta nota de venta?','anular_nota_venta','Si','No',<?= $al->id_venta;?>, '3')" ><i class="fa fa-ban"></i></a>
+                                                        <?php
                                                     }
                                                 }
+                                            }
 
-                                                if($al->anulado_sunat == 0 && ($al->venta_tipo == '01' || $al->venta_tipo == '03')){
+                                            if($al->anulado_sunat == 0 && ($al->venta_tipo == '01' || $al->venta_tipo == '03')){
                                                 ?>
                                                 <a type="button" style="color: white" class="btn btn-sm btn-success btne" title="GENERAR NOTA" href="<?= _SERVER_ ?>Ventas/generar_nota/<?= $al->id_venta; ?>" target="_blank" ><i class="fa fa-clipboard"></i></a>
                                                 <?php
-                                                } ?>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        $a++;
-                                        $total = $total + $al->pago_total;
-                                    }
-                                    ?>
-                                    </tbody>
+                                            } ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $a++;
+                                    $total = $total + $al->pago_total;
+                                }
+                                ?>
+                                </tbody>
 
-                                </table>
-                            </div>
+                            </table>
                         </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4"></div>

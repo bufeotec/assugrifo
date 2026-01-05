@@ -45,6 +45,7 @@ function realizar_venta_rapida(){
     var saleproduct_gravada = gravada;
     var saleproduct_igv = igv;
     var saleproduct_gratuita = $('#gratuita').val();
+    var movimiento_stock = $('#movimiento_stock').val();
     var pago_con_ = $('#pago_con_').val();
     var vuelto_ = $('#vuelto_').val();
     var des_global = $('#descuento_global').val();
@@ -118,6 +119,7 @@ function realizar_venta_rapida(){
                 "&des_global=" + des_global +
                 "&des_total=" + des_total +
                 "&id_talla=" + id_talla +
+                "&movimiento_stock=" + movimiento_stock +
                 "&contenido_cuota=" + contenido_cuota +
                 "&saleproduct_igv=" + saleproduct_igv;
             $.ajax({
@@ -134,7 +136,7 @@ function realizar_venta_rapida(){
                         case 1:
                             respuesta('¡Venta realizada correctamente!', 'success');
                             setTimeout(function () {
-                                  location.href = urlweb + 'Ventas/venta_rapida';
+                                location.href = urlweb + 'Ventas/venta_rapida';
                             }, 300);
                             break;
                         case 2:
@@ -257,6 +259,7 @@ function realizar_nota(){
                 "&des_global=" + des_global +
                 "&des_total=" + des_total +
                 "&id_talla=" + id_talla +
+                "&movimiento_stock=0"  +
                 "&contenido_cuota=" + contenido_cuota +
                 "&saleproduct_igv=" + saleproduct_igv;
             $.ajax({
@@ -273,7 +276,7 @@ function realizar_nota(){
                         case 1:
                             respuesta('¡Venta realizada correctamente!', 'success');
                             setTimeout(function () {
-                                  location.href = urlweb + 'Ventas/historial_ventas_enviadas';
+                                location.href = urlweb + 'Ventas/historial_ventas_enviadas';
                             }, 300);
                             break;
                         case 2:
@@ -659,6 +662,42 @@ function anular_boleta_cambiarestado(id_venta, estado){
             switch (r.result.code) {
                 case 1:
                     respuesta('¡Comprobante Anulado, listo para ser enviado por Resumen Diario!', 'success');
+                    setTimeout(function () {
+                        location.reload();
+                        //location.href = urlweb +  'Pedido/gestionar';
+                    }, 1000);
+                    break;
+                case 2:
+                    respuesta('Error al anular el comprobante electronico', 'error');
+                    setTimeout(function () {
+                        location.reload();
+                        //location.href = urlweb +  'Pedido/gestionar';
+                    }, 1000);
+                    break;
+                default:
+                    respuesta('¡Algo catastrofico ha ocurrido!', 'error');
+                    break;
+            }
+        }
+
+    });
+}
+function anular_nota_venta(id_venta, estado){
+    var cadena = "id_venta=" + id_venta + "&estado=" + estado;
+    var boton = 'btn_anular_boleta'+id_venta;
+    $.ajax({
+        type: "POST",
+        url: urlweb + "api/Ventas/anular_nota_venta",
+        data: cadena,
+        dataType: 'json',
+        beforeSend: function () {
+            cambiar_estado_boton(boton, 'Anulando...', true);
+        },
+        success:function (r) {
+            cambiar_estado_boton(boton, "ANULAR", false);
+            switch (r.result.code) {
+                case 1:
+                    respuesta('¡Comprobante Anulado!', 'success');
                     setTimeout(function () {
                         location.reload();
                         //location.href = urlweb +  'Pedido/gestionar';

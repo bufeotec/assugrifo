@@ -187,7 +187,7 @@ class VentasController
                 $query = "SELECT * FROM ventas v inner join clientes c on v.id_cliente = c.id_cliente inner join monedas mo
                         on v.id_moneda = mo.id_moneda INNER JOIN usuarios u on v.id_usuario = u.id_usuario 
                         inner join tipo_pago tp on v.id_tipo_pago = tp.id_tipo_pago 
-                        where v.venta_estado_sunat = 0";
+                        where v.venta_estado_sunat = 0 ";
                 $select = "";
                 $where = true;
                 if($_POST['tipo_venta']!=""){
@@ -253,7 +253,7 @@ class VentasController
                 $query = "SELECT * FROM ventas v inner join clientes c on v.id_cliente = c.id_cliente inner join monedas mo
                         on v.id_moneda = mo.id_moneda INNER JOIN usuarios u on v.id_usuario = u.id_usuario 
                         inner join tipo_pago tp on v.id_tipo_pago = tp.id_tipo_pago 
-                        where v.venta_estado_sunat = 1";
+                        where v.venta_estado_sunat = 1 and  v.venta_tipo in ('01', '03', '07', '08', '10')";
                 $select = "";
                 $where = true;
                 if($_POST['tipo_venta']!=""){
@@ -977,160 +977,160 @@ class VentasController
             //Validacion de datos
             if($ok_data){
                 $model = new Ventas();
-                    $model->venta_tipo_envio = "0";
-                    //$consulta_cliente = $this->clientes->listar_cliente_x_numerodoc($_POST['cliente_number']);
-                    $id_turno = $this->turno->listar();
-                    $model->id_cliente = 1;
-                    $id_usuario = $this->encriptar->desencriptar($_SESSION['c_u'], _FULL_KEY_);
-                    $model->id_usuario = $id_usuario;
-                    $model->id_turno = $id_turno->id_turno;
-                    $model->id_caja = 1;
-                    //$model->venta_nombre = $_POST['client_name'];
-                    //$model->venta_direccion = $_POST['saleproduct_direccion'];
-                    //$producto_venta_tipo = $_POST['saleproduct_type'];
-                    //$model->venta_tipo =  $producto_venta_tipo;
-                    $model->id_tipo_pago =  $_POST['id_tipo_pago'];
-                    //obtener serie con el id
-                    $serie_ = $this->ventas->listar_correlativos_x_serie($_POST['serie']);
-                    //$model->venta_serie = $serie_->serie;
-                    //$model->venta_correlativo = $_POST['correlativo'];
-                    $model->venta_tipo_moneda = $_POST['tipo_moneda'];
-                    $producto_venta_correlativo = 1;
-                    $model->producto_venta_correlativo = $producto_venta_correlativo;
-                    $model->producto_venta_totalgratuita = $_POST['saleproduct_gratuita'];
-                    $model->producto_venta_totalexonerada = $_POST['saleproduct_exonerada'];
-                    $model->producto_venta_totalinafecta = $_POST['saleproduct_inafecta'];
-                    $model->producto_venta_totalgravada = $_POST['saleproduct_gravada'];
-                    $model->producto_venta_totaligv = $_POST['saleproduct_igv'];
-                    $model->producto_venta_icbper = $_POST['saleproduct_icbper'];
-                    $model->producto_venta_total = $_POST['saleproduct_total'];
-                    if(empty($_POST['vuelto_'])){
-                        $model->producto_venta_vuelto = 0;
-                    }else{
-                        $model->producto_venta_vuelto = $_POST['vuelto_'];
-                    }
-                    if(empty($_POST['pago_con_'])){
-                        $model->producto_venta_pago = 0;
-                    }else{
-                        $model->producto_venta_pago = $_POST['pago_con_'];
-                    }
-                    if(empty($_POST['des_global'])){
-                        $model->producto_venta_des_global = 0;
-                    }else{
-                        $model->producto_venta_des_global = $_POST['des_global'];
-                    }
-                    if(empty($_POST['des_total'])){
-                        $model->producto_venta_des_total = 0;
-                    }else{
-                        $model->producto_venta_des_total = $_POST['des_total'];
-                    }
-                    $producto_venta_fecha = date("Y-m-d H:i:s");
-                    $model->producto_venta_fecha = $producto_venta_fecha;
-                    $model->tipo_documento_modificar = $_POST['Tipo_documento_modificar'];
-                    $model->serie_modificar = $_POST['serie_modificar'];
-                    $model->numero_modificar = $_POST['numero_modificar'];
-                    $model->notatipo_descripcion = $_POST['notatipo_descripcion'];
-                    $model->venta_estado = 0;
-                    $guardar = $this->ventas->guardar_pre_venta($model);
+                $model->venta_tipo_envio = "0";
+                //$consulta_cliente = $this->clientes->listar_cliente_x_numerodoc($_POST['cliente_number']);
+                $id_turno = $this->turno->listar();
+                $model->id_cliente = 1;
+                $id_usuario = $this->encriptar->desencriptar($_SESSION['c_u'], _FULL_KEY_);
+                $model->id_usuario = $id_usuario;
+                $model->id_turno = $id_turno->id_turno;
+                $model->id_caja = 1;
+                //$model->venta_nombre = $_POST['client_name'];
+                //$model->venta_direccion = $_POST['saleproduct_direccion'];
+                //$producto_venta_tipo = $_POST['saleproduct_type'];
+                //$model->venta_tipo =  $producto_venta_tipo;
+                $model->id_tipo_pago =  $_POST['id_tipo_pago'];
+                //obtener serie con el id
+                $serie_ = $this->ventas->listar_correlativos_x_serie($_POST['serie']);
+                //$model->venta_serie = $serie_->serie;
+                //$model->venta_correlativo = $_POST['correlativo'];
+                $model->venta_tipo_moneda = $_POST['tipo_moneda'];
+                $producto_venta_correlativo = 1;
+                $model->producto_venta_correlativo = $producto_venta_correlativo;
+                $model->producto_venta_totalgratuita = $_POST['saleproduct_gratuita'];
+                $model->producto_venta_totalexonerada = $_POST['saleproduct_exonerada'];
+                $model->producto_venta_totalinafecta = $_POST['saleproduct_inafecta'];
+                $model->producto_venta_totalgravada = $_POST['saleproduct_gravada'];
+                $model->producto_venta_totaligv = $_POST['saleproduct_igv'];
+                $model->producto_venta_icbper = $_POST['saleproduct_icbper'];
+                $model->producto_venta_total = $_POST['saleproduct_total'];
+                if(empty($_POST['vuelto_'])){
+                    $model->producto_venta_vuelto = 0;
+                }else{
+                    $model->producto_venta_vuelto = $_POST['vuelto_'];
+                }
+                if(empty($_POST['pago_con_'])){
+                    $model->producto_venta_pago = 0;
+                }else{
+                    $model->producto_venta_pago = $_POST['pago_con_'];
+                }
+                if(empty($_POST['des_global'])){
+                    $model->producto_venta_des_global = 0;
+                }else{
+                    $model->producto_venta_des_global = $_POST['des_global'];
+                }
+                if(empty($_POST['des_total'])){
+                    $model->producto_venta_des_total = 0;
+                }else{
+                    $model->producto_venta_des_total = $_POST['des_total'];
+                }
+                $producto_venta_fecha = date("Y-m-d H:i:s");
+                $model->producto_venta_fecha = $producto_venta_fecha;
+                $model->tipo_documento_modificar = $_POST['Tipo_documento_modificar'];
+                $model->serie_modificar = $_POST['serie_modificar'];
+                $model->numero_modificar = $_POST['numero_modificar'];
+                $model->notatipo_descripcion = $_POST['notatipo_descripcion'];
+                $model->venta_estado = 0;
+                $guardar = $this->ventas->guardar_pre_venta($model);
 
-                    if($guardar == 1){
-                        $jalar_id = $this->ventas->jalar_id_venta($producto_venta_fecha,$id_usuario);
-                        $idventa = $jalar_id->id_venta;
-                    }
+                if($guardar == 1){
+                    $jalar_id = $this->ventas->jalar_id_venta($producto_venta_fecha,$id_usuario);
+                    $idventa = $jalar_id->id_venta;
+                }
 
-                    if($idventa != 0) { //despues de registrar la venta se sigue a registrar el detalle
-                        $fecha_bolsa = date("Y");
-                        if ($fecha_bolsa == "2020"){
-                            $impuesto_icbper = 0.20;
-                        } else if ($fecha_bolsa == "2021"){
-                            $impuesto_icbper = 0.30;
-                        } else if ($fecha_bolsa == "2022") {
-                            $impuesto_icbper = 0.40;
-                        } else{
-                            $impuesto_icbper = 0.50;
+                if($idventa != 0) { //despues de registrar la venta se sigue a registrar el detalle
+                    $fecha_bolsa = date("Y");
+                    if ($fecha_bolsa == "2020"){
+                        $impuesto_icbper = 0.20;
+                    } else if ($fecha_bolsa == "2021"){
+                        $impuesto_icbper = 0.30;
+                    } else if ($fecha_bolsa == "2022") {
+                        $impuesto_icbper = 0.40;
+                    } else{
+                        $impuesto_icbper = 0.50;
+                    }
+                    $igv_porcentaje = 0.18;
+                    $ICBPER = 0;
+                    foreach ($_SESSION['productos'] as $p){
+                        $cantidad = $p[3];
+                        $precio_unitario = $p[2];
+                        $descuento_item = $p[5];
+                        $factor_porcentaje = 1;
+                        $porcentaje=0;
+                        $igv_detalle=0;
+                        if($p[4] == 10){
+                            $igv_detalle = $p[2]*$p[3]*$igv_porcentaje;
+                            $factor_porcentaje = 1+ $igv_porcentaje;
+                            $porcentaje = $igv_porcentaje * 100;
                         }
-                        $igv_porcentaje = 0.18;
-                        $ICBPER = 0;
-                        foreach ($_SESSION['productos'] as $p){
-                            $cantidad = $p[3];
-                            $precio_unitario = $p[2];
-                            $descuento_item = $p[5];
-                            $factor_porcentaje = 1;
-                            $porcentaje=0;
-                            $igv_detalle=0;
-                            if($p[4] == 10){
-                                $igv_detalle = $p[2]*$p[3]*$igv_porcentaje;
-                                $factor_porcentaje = 1+ $igv_porcentaje;
-                                $porcentaje = $igv_porcentaje * 100;
-                            }
-                            $subtotal = $precio_unitario * $cantidad;
-                            if($p[5] > 0){
-                                $subtotal = $subtotal - $descuento_item;
-                            }
-                            $id_producto_precio = $p[0];
-                            $model->id_venta = $idventa;
-                            $model->id_producto_precio = $id_producto_precio;
-                            $model->venta_detalle_valor_unitario = $precio_unitario;
-                            $model->venta_detalle_precio_unitario = $precio_unitario * $factor_porcentaje;
-                            $model->venta_detalle_nombre_producto = $p[1]." / ".$p[7];
-                            $model->venta_detalle_cantidad = $cantidad;
-                            $model->venta_detalle_total_igv = $igv_detalle;
-                            $model->venta_detalle_porcentaje_igv = $porcentaje;
-                            $model->venta_detalle_valor_total = $subtotal;
-                            $model->venta_detalle_total_price = $subtotal * $factor_porcentaje;
-                            $model->venta_detalle_descuento = $descuento_item;
-                            //$id_talla = $p[7];
-
-                            $return = $this->ventas->guardar_detalle_venta($model);
-                            /*if($guardar_detalle == 1) {
-                                $reducir = $cantidad;
-
-                                $id_producto = $this->ventas->listar_id_producto_productoprecio($id_producto_precio);
-                                $this->ventas->restar_stock_talla($reducir,$id_talla);
-                                $this->ventas->guardar_stock_nuevo($reducir, $id_producto);
-                                $return = 1;
-                            } else {
-                                $return = 2;
-                            }*/
+                        $subtotal = $precio_unitario * $cantidad;
+                        if($p[5] > 0){
+                            $subtotal = $subtotal - $descuento_item;
                         }
-                        /*if($guardar_detalle == 1){
-                            $return = $this->ventas->actualizarCorrelativo_x_id_Serie($_POST['serie'],$_POST['correlativo']);
-                            //INICIO - LISTAR COLUMNAS PARA TICKET DE VENTA
-                            include('libs/ApiFacturacion/phpqrcode/qrlib.php');
-                            $venta = $this->ventas->listar_venta($idventa);
-                            $detalle_venta =$this->ventas->listar_detalle_ventas($idventa);
-                            $empresa = $this->ventas->listar_empresa_x_id_empresa($venta->id_empresa);
-                            $cliente = $this->ventas->listar_clienteventa_x_id($venta->id_cliente);
-                            //INICIO - CREACION QR
-                            $nombre_qr = $empresa->empresa_ruc. '-' .$venta->venta_tipo. '-' .$venta->venta_serie. '-' .$venta->venta_correlativo;
-                            $contenido_qr = $empresa->empresa_ruc.'|'.$venta->venta_tipo.'|'.$venta->venta_serie.'|'.$venta->venta_correlativo. '|'.
-                                $venta->venta_totaligv.'|'.$venta->venta_total.'|'.date('Y-m-d', strtotime($venta->venta_fecha)).'|'.
-                                $cliente->tipodocumento_codigo.'|'.$cliente->cliente_numero;
-                            $ruta = 'libs/ApiFacturacion/imagenqr/';
-                            $ruta_qr = $ruta.$nombre_qr.'.png';
-                            QRcode::png($contenido_qr, $ruta_qr, 'H - mejor', '3');
-                            //FIN - CREACION QR
-                            if($venta->venta_tipo == "03"){
-                                $venta_tipo = "BOLETA DE VENTA ELECTRÓNICA";
-                            }elseif($venta->venta_tipo == "01"){
-                                $venta_tipo = "FACTURA DE VENTA ELECTRÓNICA";
-                            }elseif($venta->venta_tipo == "07"){
-                                $venta_tipo = "NOTA DE CRÉDITO ELECTRÓNICA";
-                                $motivo = $this->ventas->listar_tipo_notaC_x_codigo($venta->venta_codigo_motivo_nota);
-                            }else{
-                                $venta_tipo = "NOTA DE DÉBITO ELECTRÓNICA";
-                                $motivo = $this->ventas->listar_tipo_notaD_x_codigo($venta->venta_codigo_motivo_nota);
+                        $id_producto_precio = $p[0];
+                        $model->id_venta = $idventa;
+                        $model->id_producto_precio = $id_producto_precio;
+                        $model->venta_detalle_valor_unitario = $precio_unitario;
+                        $model->venta_detalle_precio_unitario = $precio_unitario * $factor_porcentaje;
+                        $model->venta_detalle_nombre_producto = $p[1]." / ".$p[7];
+                        $model->venta_detalle_cantidad = $cantidad;
+                        $model->venta_detalle_total_igv = $igv_detalle;
+                        $model->venta_detalle_porcentaje_igv = $porcentaje;
+                        $model->venta_detalle_valor_total = $subtotal;
+                        $model->venta_detalle_total_price = $subtotal * $factor_porcentaje;
+                        $model->venta_detalle_descuento = $descuento_item;
+                        //$id_talla = $p[7];
 
-                            }
-                            if($cliente->id_tipodocumento == "4"){
-                                $cliente_nombre = $cliente->cliente_razonsocial;
-                            }else{
-                                $cliente_nombre = $cliente->cliente_nombre;
-                            }
-                            /*if($return == 1){
-                                require _VIEW_PATH_ . 'ventas/ticket_electronico.php';
-                            }*/
+                        $return = $this->ventas->guardar_detalle_venta($model);
+                        /*if($guardar_detalle == 1) {
+                            $reducir = $cantidad;
+
+                            $id_producto = $this->ventas->listar_id_producto_productoprecio($id_producto_precio);
+                            $this->ventas->restar_stock_talla($reducir,$id_talla);
+                            $this->ventas->guardar_stock_nuevo($reducir, $id_producto);
+                            $return = 1;
+                        } else {
+                            $return = 2;
+                        }*/
+                    }
+                    /*if($guardar_detalle == 1){
+                        $return = $this->ventas->actualizarCorrelativo_x_id_Serie($_POST['serie'],$_POST['correlativo']);
+                        //INICIO - LISTAR COLUMNAS PARA TICKET DE VENTA
+                        include('libs/ApiFacturacion/phpqrcode/qrlib.php');
+                        $venta = $this->ventas->listar_venta($idventa);
+                        $detalle_venta =$this->ventas->listar_detalle_ventas($idventa);
+                        $empresa = $this->ventas->listar_empresa_x_id_empresa($venta->id_empresa);
+                        $cliente = $this->ventas->listar_clienteventa_x_id($venta->id_cliente);
+                        //INICIO - CREACION QR
+                        $nombre_qr = $empresa->empresa_ruc. '-' .$venta->venta_tipo. '-' .$venta->venta_serie. '-' .$venta->venta_correlativo;
+                        $contenido_qr = $empresa->empresa_ruc.'|'.$venta->venta_tipo.'|'.$venta->venta_serie.'|'.$venta->venta_correlativo. '|'.
+                            $venta->venta_totaligv.'|'.$venta->venta_total.'|'.date('Y-m-d', strtotime($venta->venta_fecha)).'|'.
+                            $cliente->tipodocumento_codigo.'|'.$cliente->cliente_numero;
+                        $ruta = 'libs/ApiFacturacion/imagenqr/';
+                        $ruta_qr = $ruta.$nombre_qr.'.png';
+                        QRcode::png($contenido_qr, $ruta_qr, 'H - mejor', '3');
+                        //FIN - CREACION QR
+                        if($venta->venta_tipo == "03"){
+                            $venta_tipo = "BOLETA DE VENTA ELECTRÓNICA";
+                        }elseif($venta->venta_tipo == "01"){
+                            $venta_tipo = "FACTURA DE VENTA ELECTRÓNICA";
+                        }elseif($venta->venta_tipo == "07"){
+                            $venta_tipo = "NOTA DE CRÉDITO ELECTRÓNICA";
+                            $motivo = $this->ventas->listar_tipo_notaC_x_codigo($venta->venta_codigo_motivo_nota);
+                        }else{
+                            $venta_tipo = "NOTA DE DÉBITO ELECTRÓNICA";
+                            $motivo = $this->ventas->listar_tipo_notaD_x_codigo($venta->venta_codigo_motivo_nota);
+
                         }
+                        if($cliente->id_tipodocumento == "4"){
+                            $cliente_nombre = $cliente->cliente_razonsocial;
+                        }else{
+                            $cliente_nombre = $cliente->cliente_nombre;
+                        }
+                        /*if($return == 1){
+                            require _VIEW_PATH_ . 'ventas/ticket_electronico.php';
+                        }*/
+                }
 
             } else {
                 //Código 6: Integridad de datos erronea
@@ -1246,6 +1246,10 @@ class VentasController
                         $jalar_id = $this->ventas->jalar_id_venta($producto_venta_fecha,$id_cliente);
                         $idventa = $jalar_id->id_venta;
                     }
+                    //Según el tipo de venta, lo ponemos como enviado a SUNAT
+                    if($producto_venta_tipo == '10'){
+                        $this->ventas->poner_enviado($idventa);
+                    }
 
                     if($idventa != 0) { //despues de registrar la venta se sigue a registrar el detalle
                         /* Si la venta se contiene cuota Aca se guarda  */
@@ -1318,14 +1322,15 @@ class VentasController
                             $model->venta_detalle_valor_total = $subtotal;
                             $model->venta_detalle_total_price = $subtotal * $factor_porcentaje;
                             $model->venta_detalle_descuento = $descuento_item;
+                            $model->venta_detalle_stock = $_POST['movimiento_stock'];
+                            $model->venta_detalle_movimiento_stock = $cantidad * -1;
                             $id_talla = $p[6];
 
                             $guardar_detalle = $this->ventas->guardar_detalle_venta($model);
                             if($guardar_detalle == 1) {
-                                $reducir = $cantidad;
-                                $id_producto = $this->ventas->listar_id_producto_productoprecio($id_producto_precio);
-                                $this->ventas->restar_stock_talla($reducir,$id_talla);
-                                $this->ventas->guardar_stock_nuevo($reducir, $id_producto);
+                                //$id_producto = $this->ventas->listar_id_producto_productoprecio($id_producto_precio);
+                                $stock = $this->ventas->contar_stock_talla($id_talla);
+                                $this->ventas->actualizar_stock_talla($stock, $id_talla);
                                 $return = 1;
                             } else {
                                 $return = 2;
@@ -1564,6 +1569,8 @@ class VentasController
                             $model->venta_detalle_porcentaje_igv = $porcentaje;
                             $model->venta_detalle_valor_total = $subtotal;
                             $model->venta_detalle_total_price = $subtotal * $factor_porcentaje;
+                            $model->venta_detalle_descuento = 0;
+                            $model->venta_detalle_stock = 0;
                             $model->venta_detalle_descuento = $descuento_item;
                             $id_talla = $p[6];
 
@@ -2218,6 +2225,43 @@ class VentasController
         //Retornamos el json
         echo json_encode(array("result" => array("code" => $result, "message" => $message)));
     }
+    public function anular_nota_venta(){
+        //Código de error general
+        $result = 1;
+        //Mensaje a devolver en caso de hacer consulta por app
+        $message = 'OK';
+        try{
+            $ok_data = true;
+            //Validamos que todos los parametros a recibir sean correctos. De ocurrir un error de validación,
+            //$ok_true se cambiará a false y finalizara la ejecucion de la funcion
+            //$ok_data = $this->validar->validar_parametro('id_comanda_detalle', 'POST',true,$ok_data,11,'texto',0);
+
+            //Validacion de datos
+            if($ok_data) {
+                $id_venta = $_POST['id_venta'];
+                $result = $this->ventas->actualizar_nota_venta_anulado($id_venta);
+                if($result == 1){
+                    //Acá se anulan los items al anular la nota de venta
+                    $detalles = $this->ventas->buscar_detalle_venta($id_venta);
+                    foreach ($detalles as $detalle) {
+                        $this->ventas->anular_movimiento_detalle($detalle->id_venta_detalle);
+                        $stock = $this->ventas->contar_stock_talla($detalle->id_talla);
+                        $this->ventas->actualizar_stock_talla($stock, $detalle->id_talla);
+                    }
+                }
+            }else {
+                //Código 6: Integridad de datos erronea
+                $result = 6;
+                $message = "Integridad de datos fallida. Algún parametro se está enviando mal";
+            }
+        }catch (Exception $e){
+            //Registramos el error generado y devolvemos el mensaje enviado por PHP
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $message = $e->getMessage();
+        }
+        //Retornamos el json
+        echo json_encode(array("result" => array("code" => $result, "message" => $message)));
+    }
 
     //FUNCIONES PARA LAS TALLAS
     public function jalar_datos_talla(){
@@ -2328,6 +2372,10 @@ class VentasController
 
             } else if ($dato_venta->venta_tipo == "20") {
                 $tipo_comprobante = "NOTA DE VENTA ELECTRONICA";
+                $serie_correlativo = $dato_venta->venta_serie."-".$dato_venta->venta_correlativo;
+                $documento = "$dato_venta->cliente_numero";
+            } else if ($dato_venta->venta_tipo == "10") {
+                $tipo_comprobante = "NOTA DE VENTA";
                 $serie_correlativo = $dato_venta->venta_serie."-".$dato_venta->venta_correlativo;
                 $documento = "$dato_venta->cliente_numero";
             } else {

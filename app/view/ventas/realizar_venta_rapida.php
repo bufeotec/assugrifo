@@ -222,8 +222,8 @@
                     <option value= "">Seleccionar...</option>
                     <option value="03" selected>BOLETA</option>
                     <option value="01">FACTURA</option>
-                    <!--<option value= "07">NOTA DE CREDITO</option>
-                    <option value= "08">NOTA DE DEBITO</option>-->
+                    <option value= "10">NOTA DE VENTA</option>
+                    <!--<option value= "08">NOTA DE DEBITO</option>-->
                 </select>
             </div>
             <div class="col-lg-3">
@@ -325,6 +325,13 @@
             </div>
             <div class="col-lg-3">
                 <button style="width: 80%; margin-left: 10px; margin-top: 32px" class="btn btn-success" type="button" data-toggle="modal" data-target="#largeModal"><i class="fa fa-search"></i> Buscar Producto</button>
+            </div>
+            <div class="col-lg-3">
+                <label for="movimiento_stock">¿Registrar Movimiento de Stock?</label>
+                <select name="movimiento_stock" id="movimiento_stock" class="form-control">
+                    <option value="1">SI</option>
+                    <option value="0">NO</option>
+                </select>
             </div>
             <div class="col-lg-3" style="display: none">
                 <label>PAGO DEL CLIENTE</label>

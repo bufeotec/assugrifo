@@ -375,6 +375,18 @@ class Inventario{
         }
         return $result;
     }
+    public function listar_info_producto_talla($id){
+        try{
+            $sql = "select * from producto pp inner join talla t on pp.id_producto = t.id_producto where t.id_talla = ?";
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id]);
+            $result = $stm->fetch();
+        } catch (Exception $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 2;
+        }
+        return $result;
+    }
     //Guardar Precio Producto
     public function guardar_precio($model2){
         try {
@@ -1052,6 +1064,20 @@ class Inventario{
         return $result;
     }
 
+    public function consultar_producto_precio_talla($id_talla){
+        try {
+            $sql = 'select * from producto_precio pp inner join talla t on pp.id_talla = t.id_talla inner join producto p on t.id_producto = p.id_producto where pp.id_talla = ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id_talla]);
+            $result = $stm->fetch();
+        } catch (Exception $e){
+            //throw new Exception($e->getMessage());
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = [];
+        }
+        return $result;
+    }
+
     //ULTIMA FUNCION PARA PODER SACAR EL STOCK POR TALLAS
     public function sumar_todo_stock($id_producto){
         try{
@@ -1077,6 +1103,45 @@ class Inventario{
             //throw new Exception($e->getMessage());
             $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
             $result = 2;
+        }
+        return $result;
+    }
+
+    public function stock_talla_fecha($id_talla, $fecha_inicio){
+        try{
+            $sql = 'select sum(vd.venta_detalle_movimiento_stock) as total_inicio from ventas v inner join ventas_detalle vd on v.id_venta = vd.id_venta inner join producto_precio pp on vd.id_producto_precio = pp.id_producto_precio inner join talla t on pp.id_talla = t.id_talla where pp.id_talla = ? and v.venta_cancelar = 1 and v.anulado_sunat = 0 and vd.venta_detalle_stock = 1 and date(v.venta_fecha) < ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id_talla, $fecha_inicio]);
+            $result = $stm->fetch();
+        } catch (Exception $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = [];
+        }
+        return $result->total_inicio ?? 0;
+    }
+    public function stock_movimientos_talla($id_talla, $fecha_inicio, $fecha_fin){
+        try{
+            $sql = 'select * from ventas v inner join ventas_detalle vd on v.id_venta = vd.id_venta inner join producto_precio pp on vd.id_producto_precio = pp.id_producto_precio inner join talla t on pp.id_talla = t.id_talla where pp.id_talla = ? and v.venta_cancelar = 1 and v.anulado_sunat = 0 and vd.venta_detalle_stock = 1 and date(v.venta_fecha) between ? and ? order by v.venta_fecha asc';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id_talla, $fecha_inicio, $fecha_fin]);
+            $result = $stm->fetchAll();
+        } catch (Exception $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = [];
+        }
+        return $result;
+    }
+
+    public function listar_usuario($id_usuario)
+    {
+        try{
+            $sql = 'select p.* from usuarios u inner join personas p on u.id_persona = p.id_persona where u.id_usuario = ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id_usuario]);
+            $result = $stm->fetch();
+        } catch (Exception $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = [];
         }
         return $result;
     }

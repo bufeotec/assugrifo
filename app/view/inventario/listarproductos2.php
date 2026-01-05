@@ -121,7 +121,7 @@
                         <!--<th>Tipo de Unidad</th>-->
                         <!--<th>Precio Unitario Compra</th>-->
                         <!--<th>P. Venta</th>-->
-                        <th>Stock</th>
+                        <!--<th>Stock</th>-->
                         <th>Acción</th>
                     </tr>
                     </thead>
@@ -144,7 +144,7 @@
                             <!--<td><?php echo $p->medida_nombre;?></td>-->
                             <!--<td>S/. <?php echo $p->producto_precio_compra;?></td>-->
                             <!--<td>S/. <?php echo $p->producto_precio_valor;?></td>-->
-                            <td><?php echo $sumar_stock->stock;?></td>
+                            <!--<td><?php echo $sumar_stock->stock;?></td>-->
                             <td><a class="btn btn-chico btn-warning" type="button" href="<?php echo _SERVER_;?>Inventario/editar_producto/<?php echo $p->id_producto;?>"><i class="fa fa-pencil"></i></a>
 
                                 <?php

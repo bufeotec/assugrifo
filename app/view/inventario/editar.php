@@ -79,7 +79,7 @@
                             ?>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label >Stock Producto</label>
                         <input type="text" class="form-control" id="producto_stock" placeholder="Ingresar Stock Producto..." onkeypress="return valida(event)" value="<?php echo $producto->producto_stock;?>" readonly>
                     </div>

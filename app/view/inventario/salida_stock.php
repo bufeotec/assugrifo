@@ -51,7 +51,7 @@
                                 <label >Guia de Remisión</label>
                                 <input type="text" class="form-control" readonly id="stockout_guide" value="<?php echo 'GS-'.$fechahoy.'-'.$correlativo->correlativo_out; ?>" placeholder="Ingresar Guia de Remisión..." >
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;">
                                 <label >Origen</label>
                                 <input type="text" class="form-control" id="stockout_origin" placeholder="Ingresar Origen..." >
                             </div>
@@ -59,7 +59,7 @@
                                 <label >Descripción</label>
                                 <textarea class="form-control" name="stockout_description" id="stockout_description" cols="30" rows="2" placeholder="Ingresar Descripción..."></textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;">
                                 <label >Destino</label>
                                 <input type="text" class="form-control" id="stockout_destiny" placeholder="Ingresar Destino..." >
                             </div>

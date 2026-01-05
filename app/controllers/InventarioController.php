@@ -11,6 +11,8 @@ require 'app/models/Correlativo.php';
 require 'app/models/Categoria.php';
 require 'app/models/UnidadMedida.php';
 require 'app/models/Proveedor.php';
+require 'app/models/Ventas.php';
+require 'app/models/Turno.php';
 class InventarioController{
     private $encriptar;
     private $menu;
@@ -23,6 +25,8 @@ class InventarioController{
     private $unidad_medida;
     private $validar;
     private $proveedor;
+    private $ventas;
+    private $turno;
     public function __construct()
     {
         $this->encriptar = new Encriptar();
@@ -35,6 +39,8 @@ class InventarioController{
         $this->unidad_medida =  new UnidadMedida();
         $this->validar = new Validar();
         $this->proveedor = new Proveedor();
+        $this->ventas = new Ventas();
+        $this->turno = new Turno();
     }
     //Vistas
 
@@ -177,6 +183,40 @@ class InventarioController{
             require _VIEW_PATH_ . 'inventario/addproductsale.php';
             require _VIEW_PATH_ . 'footer.php';
 
+        } catch (Throwable $e){
+            //En caso de errores insertamos el error generado y redireccionamos a la vista de inicio
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            echo "<script language=\"javascript\">alert(\"Error Al Mostrar Contenido. Redireccionando Al Inicio\");</script>";
+            echo "<script language=\"javascript\">window.location.href=\"". _SERVER_ ."\";</script>";
+        }
+    }
+
+    public function kardex_item()
+    {
+        try{
+            $idp = $_GET['id'];
+            $this->nav = new Navbar();
+            $navs = $this->nav->listar_menus($this->encriptar->desencriptar($_SESSION['ru'],_FULL_KEY_));
+            $fecha_fin = date('Y-m-d');
+            $fecha_inicio = date('Y-m-d', strtotime($fecha_fin . ' - 7 days'));
+            $fecha_stock_final = date('Y-m-d', strtotime($fecha_fin . ' + 1 days'));
+            if(!empty($_GET['fecha_inicio']) && !empty($_GET['fecha_fin'])){
+                $fecha_inicio = $_GET['fecha_inicio'];
+                $fecha_fin = $_GET['fecha_fin'];
+            }
+            if(empty($_GET['id'])){
+                echo "<script language=\"javascript\">alert(\"ID no declarado\");</script>";
+                echo "<script language=\"javascript\">window.location.href=\"". _SERVER_ ."\";</script>";
+            }
+            $recurso_inicial = $this->inventario->stock_talla_fecha($_GET['id'], $fecha_inicio);
+            $recursos_almacen = $this->inventario->stock_movimientos_talla($_GET['id'], $fecha_inicio, $fecha_fin);
+            $stock_final = $this->inventario->stock_talla_fecha($_GET['id'], $fecha_stock_final);
+
+            $producto = $this->inventario->listar_info_producto_talla($_GET['id']);
+            require _VIEW_PATH_ . 'header.php';
+            require _VIEW_PATH_ . 'navbar.php';
+            require _VIEW_PATH_ . 'inventario/kardex_item.php';
+            require _VIEW_PATH_ . 'footer.php';
         } catch (Throwable $e){
             //En caso de errores insertamos el error generado y redireccionamos a la vista de inicio
             $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
@@ -401,9 +441,83 @@ class InventarioController{
 
             //Validacion de datos
             if($ok_data){
-                $id_producto = $_POST['id_producto'];
                 $id_talla = $_POST['id_talla'];
-                $stock_nuevo = $_POST['stock_nuevo'];
+                $stock_nuevo = floatval($_POST['stock_nuevo']);
+                $codigo_serie = 15;
+                //Acá tengo que hacer la función para simular un registro de venta y con eso guardar el registro y el producto
+
+                //Codigo de Inicio de Registro de Formulario de Stock
+                $id_turno = $this->turno->listar();
+                $model = new Ventas();
+                $model->id_cliente = 1;
+                $model->id_usuario = $this->encriptar->desencriptar($_SESSION['c_u'], _FULL_KEY_);
+                $model->id_turno = $id_turno->id_turno;
+                $model->id_caja = 1;
+                $model->venta_tipo =  'OI';
+                $model->id_tipo_pago =  3;
+                $model->forma_pago =  'CONTADO';
+                //obtener serie con el id
+                $serie_ = $this->ventas->listar_correlativos_x_serie($codigo_serie);
+                $model->venta_serie = $serie_->serie;
+                $model->venta_correlativo = $serie_->correlativo + 1;
+                $model->venta_tipo_moneda = 1;
+                /*$producto_venta_correlativo = 1;
+                $model->producto_venta_correlativo = $producto_venta_correlativo;*/
+                $model->producto_venta_totalgratuita = 0;
+                $model->producto_venta_totalexonerada = 0;
+                $model->producto_venta_totalinafecta = 0;
+                $model->producto_venta_totalgravada = 0;
+                $model->producto_venta_totaligv = 0;
+                $model->producto_venta_icbper = 0;
+                $model->producto_venta_total = 0;
+                $model->producto_venta_vuelto = 0;
+                $model->producto_venta_pago = 0;
+                $model->producto_venta_des_global = 0;
+                $model->producto_venta_des_total = 0;
+                $producto_venta_fecha = date("Y-m-d H:i:s");
+                $model->producto_venta_fecha = $producto_venta_fecha;
+                $model->tipo_documento_modificar = null;
+                $model->serie_modificar = null;
+                $model->numero_modificar = null;
+                $model->notatipo_descripcion = null;
+                $model->venta_tipo_envio = 4;
+                $model->venta_estado = 1;
+                $model->id_usuario_cobro = $this->encriptar->desencriptar($_SESSION['c_u'], _FULL_KEY_);
+                $model->venta_nota_dato = $_POST['stocklog_description'];
+                $guardar = $this->ventas->guardar_venta($model);
+                if($guardar == 1){
+                    $id_cliente = 1;
+                    $jalar_id = $this->ventas->jalar_id_venta($producto_venta_fecha,$id_cliente);
+                    $idventa = $jalar_id->id_venta;
+                    //Buscar detalle del producto
+                    $producto_detalle = $this->inventario->consultar_producto_precio_talla($_POST['id_talla']);
+                    $this->ventas->poner_enviado($idventa);
+                    $model->id_venta = $idventa;
+                    $model->id_producto_precio = $producto_detalle->id_producto_precio;
+                    $model->venta_detalle_valor_unitario = 0;
+                    $model->venta_detalle_precio_unitario = 0;
+                    $model->venta_detalle_nombre_producto = $producto_detalle->producto_nombre . ' ' . $producto_detalle->talla_nombre;
+                    $model->venta_detalle_cantidad = $stock_nuevo;
+                    $model->venta_detalle_total_igv = 0;
+                    $model->venta_detalle_porcentaje_igv = 0;
+                    $model->venta_detalle_valor_total = 0;
+                    $model->venta_detalle_total_price = 0;
+                    $model->venta_detalle_descuento = 0;
+                    $model->venta_detalle_stock = 1;
+                    $model->venta_detalle_movimiento_stock = $stock_nuevo;
+
+                    $guardar_detalle = $this->ventas->guardar_detalle_venta($model);
+                    if($guardar_detalle == 1) {
+                        $stock = $this->ventas->contar_stock_talla($id_talla);
+                        $this->ventas->actualizar_stock_talla($stock, $id_talla);
+                        $result = 1;
+                        $this->ventas->actualizarCorrelativo_x_id_Serie($codigo_serie,$serie_->correlativo + 1);
+                    }
+                }
+                //Fin de Registro de Formulario de Stock
+                /*$stock = $this->ventas->contar_stock_talla($id_talla);
+                $this->ventas->actualizar_stock_talla($stock, $id_talla);
+
                 $stock_nuevo_talla = $this->inventario->sumar_stock_talla($stock_nuevo,$id_talla);
                 if($stock_nuevo_talla==1){
                     $result = $this->inventario->guardar_stock_general($stock_nuevo,$id_producto);
@@ -424,7 +538,7 @@ class InventarioController{
                 }
                 if($stock_log == 1){
                     $result = $this->correlativo->updatecorrelativeIn();
-                }
+                }*/
             }else {
                 //Código 6: Integridad de datos erronea
                 $result = 6;
@@ -456,7 +570,79 @@ class InventarioController{
                 $id_producto = $_POST['id_producto'];
                 $id_talla = $_POST['id_talla'];
                 $producto_stock = $_POST['stockout_out'];
-                $result = $this->inventario->saveoutProductstock($producto_stock, $id_talla);
+                $codigo_serie = 16;
+
+                //Codigo de Inicio de Registro de Formulario de Stock
+                $id_turno = $this->turno->listar();
+                $model = new Ventas();
+                $model->id_cliente = 1;
+                $model->id_usuario = $this->encriptar->desencriptar($_SESSION['c_u'], _FULL_KEY_);
+                $model->id_turno = $id_turno->id_turno;
+                $model->id_caja = 1;
+                $model->venta_tipo =  'OS';
+                $model->id_tipo_pago =  3;
+                $model->forma_pago =  'CONTADO';
+                //obtener serie con el id
+                $serie_ = $this->ventas->listar_correlativos_x_serie($codigo_serie);
+                $model->venta_serie = $serie_->serie;
+                $model->venta_correlativo = $serie_->correlativo + 1;
+                $model->venta_tipo_moneda = 1;
+                /*$producto_venta_correlativo = 1;
+                $model->producto_venta_correlativo = $producto_venta_correlativo;*/
+                $model->producto_venta_totalgratuita = 0;
+                $model->producto_venta_totalexonerada = 0;
+                $model->producto_venta_totalinafecta = 0;
+                $model->producto_venta_totalgravada = 0;
+                $model->producto_venta_totaligv = 0;
+                $model->producto_venta_icbper = 0;
+                $model->producto_venta_total = 0;
+                $model->producto_venta_vuelto = 0;
+                $model->producto_venta_pago = 0;
+                $model->producto_venta_des_global = 0;
+                $model->producto_venta_des_total = 0;
+                $producto_venta_fecha = date("Y-m-d H:i:s");
+                $model->producto_venta_fecha = $producto_venta_fecha;
+                $model->tipo_documento_modificar = null;
+                $model->serie_modificar = null;
+                $model->numero_modificar = null;
+                $model->notatipo_descripcion = null;
+                $model->venta_tipo_envio = 4;
+                $model->venta_estado = 1;
+                $model->id_usuario_cobro = $this->encriptar->desencriptar($_SESSION['c_u'], _FULL_KEY_);
+                $model->venta_nota_dato = $_POST['stockout_description'];
+                $guardar = $this->ventas->guardar_venta($model);
+                if($guardar == 1){
+                    $id_cliente = 1;
+                    $jalar_id = $this->ventas->jalar_id_venta($producto_venta_fecha,$id_cliente);
+                    $idventa = $jalar_id->id_venta;
+                    //Buscar detalle del producto
+                    $this->ventas->poner_enviado($idventa);
+                    $producto_detalle = $this->inventario->consultar_producto_precio_talla($_POST['id_talla']);
+
+                    $model->id_venta = $idventa;
+                    $model->id_producto_precio = $producto_detalle->id_producto_precio;
+                    $model->venta_detalle_valor_unitario = 0;
+                    $model->venta_detalle_precio_unitario = 0;
+                    $model->venta_detalle_nombre_producto = $producto_detalle->producto_nombre . ' ' . $producto_detalle->talla_nombre;
+                    $model->venta_detalle_cantidad = $producto_stock;
+                    $model->venta_detalle_total_igv = 0;
+                    $model->venta_detalle_porcentaje_igv = 0;
+                    $model->venta_detalle_valor_total = 0;
+                    $model->venta_detalle_total_price = 0;
+                    $model->venta_detalle_descuento = 0;
+                    $model->venta_detalle_stock = 1;
+                    $model->venta_detalle_movimiento_stock = $producto_stock * -1;
+
+                    $guardar_detalle = $this->ventas->guardar_detalle_venta($model);
+                    if($guardar_detalle == 1) {
+                        $stock = $this->ventas->contar_stock_talla($id_talla);
+                        $this->ventas->actualizar_stock_talla($stock, $id_talla);
+                        $result = 1;
+                        $this->ventas->actualizarCorrelativo_x_id_Serie($codigo_serie,$serie_->correlativo + 1);
+                    }
+                }
+
+                /*$result = $this->inventario->saveoutProductstock($producto_stock, $id_talla);
                 if($result==1){
                     $result = $this->inventario->restar_stock_general($producto_stock,$id_producto);
                 }
@@ -477,7 +663,7 @@ class InventarioController{
                 }
                 if($stockout == 1){
                     $result = $this->correlativo->updatecorrelativeOut();
-                }
+                }*/
             }else {
                 //Código 6: Integridad de datos erronea
                 $result = 6;

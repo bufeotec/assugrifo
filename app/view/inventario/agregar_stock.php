@@ -41,7 +41,7 @@
                                 <input type="text" class="form-control" id="producto_nombre" placeholder="Ingresar Nombre Producto..." value="<?php echo $producto->producto_nombre;?>" readonly>
                             </div>
                             <div class="form-group">
-                                <label >Talla / Medida</label>
+                                <label >Tipo</label>
                                 <input type="text" class="form-control" id="talla_nombre"  value="<?php echo $producto->talla_nombre;?>" readonly>
                             </div>
                             <div class="form-group">
@@ -73,15 +73,15 @@
                                 <label >Precio de Compra</label>
                                 <input type="text" class="form-control" id="producto_precio_compra" value="<?= $producto->producto_precio_compra;?>" placeholder="Ingresar Precio Unitario..." >
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;">
                                 <label >Precio de Venta</label>
                                 <input type="text" class="form-control" id="producto_precio_valor" value="<?= $producto->producto_precio_valor;?>" placeholder="Ingresar Precio Unitario..." >
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;">
                                 <label >Guia de Ingreso</label>
                                 <input type="text" class="form-control" id="stocklog_guide" readonly value="<?php echo 'GE-'.$fechahoy.'-'.$correlativo->correlativo_in; ?>" placeholder="Ingresar Guia de Ingreso de Producto..." >
                             </div>
-                            <div class="form-group" style="display: none">
+                            <div class="form-group">
                                 <label >Descripción</label>
                                 <input type="text" class="form-control" value="--" id="stocklog_description" placeholder="Ingresar Descripción..."  >
                             </div>

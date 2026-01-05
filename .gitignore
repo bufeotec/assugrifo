@@ -1,0 +1,10 @@
+/vendor/
+/.idea/
+/log/
+/media/
+/libs/ApiFacturacion/
+/test_server/
+/composer.json/
+/composer.lock/
+composer.json
+composer.lock

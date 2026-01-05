@@ -9,19 +9,19 @@
             <div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="recurso">Denominación</label>
                             <input type="text" onkeyup="mayuscula(this.id)" id="talla_nombre" class="form-control" name="talla_nombre" maxlength="100">
                         </div>
-                        <div class="col-md-2">
-                            <label>Stock</label>
-                            <input class="form-control" onkeyup="validar_numeros(this.id)" type="text" id="talla_stock" name="talla_stock">
+                        <div class="col-md-4" style="display: none;">
+                            <label>Stock Inicial</label>
+                            <input class="form-control" onkeyup="validar_numeros(this.id)" value="0" type="text" id="talla_stock" name="talla_stock">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label for="">Precio</label>
                             <input type="text" class="form-control" onkeyup="validar_numeros_decimales_dos(this.id)" id="producto_precio_valor" name="producto_precio_valor">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display: none;">
                             <label >Precio X Mayor</label>
                             <input type="text" class="form-control" onkeyup="validar_numeros_decimales_dos(this.id)" id="producto_precio_valor_xmayor">
                         </div>
@@ -177,7 +177,7 @@
                                 <th>Talla / Medida</th>
                                 <th>Stock</th>
                                 <th>Precio</th>
-                                <th>Precio x Mayor</th>
+                                <!--<th>Precio x Mayor</th>-->
                                 <th>Acción</th>
                             </tr>
                             </thead>
@@ -191,13 +191,14 @@
                                     <td><?php echo $m->talla_codigo_barra;?></td>
                                     <td><?php echo $m->talla_nombre;?></td>
                                     <td><?php echo $m->talla_stock;?></td>
-                                    <td><?php echo $m->producto_precio_valor;?></td>
-                                    <td><?php echo $m->producto_precio_valor_xmayor;?></td>
+                                    <td><?php echo number_format($m->producto_precio_valor,2);?></td>
+                                    <!--<td><?php echo $m->producto_precio_valor_xmayor;?></td>-->
                                     <td>
                                         <a class="btn btn-success" data-toggle="modal" data-target="#modal_add_rec_" title="Editar" onclick="editar_recurso_tipo(<?= $m->id_talla ?>,'<?= $m->talla_nombre; ?>','<?= $m->producto_precio_valor?>')" type="button"><i class="fa fa-edit ver_detalle text-white"></i></a>
                                         <a class="btn btn-danger" id="btn btn-eliminar" type="button" onclick="preguntar('Esta seguro de eliminar este registro?','eliminar_recurso_tipo','SI','NO',<?= $m->id_talla;?>)"><i class="fa fas fa-times adjuntar text-white" title="Eliminar"></i></a>
                                         <a class="btn btn-info" href="<?php echo _SERVER_;?>Inventario/agregar_stock/<?= $m->id_talla ?>"><i class="fa fa-arrow-down" title="Agregar stock"></i> </a>
                                         <a class="btn btn-primary" href="<?php echo _SERVER_;?>Inventario/salida_stock/<?php echo $m->id_talla;?>"><i class="fa fa-arrow-right" title="Salida de stock"></i></a>
+                                        <a class="btn btn-warning" href="<?php echo _SERVER_;?>Inventario/kardex_item/<?php echo $m->id_talla;?>"><i class="fa fa-eye" title="Ver Movimientos"></i></a>
                                     </td>
                                 </tr>
                                 <?php

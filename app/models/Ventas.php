@@ -226,8 +226,8 @@ class Ventas
             $sql = 'insert into ventas_detalle (id_venta, id_producto_precio, venta_detalle_valor_unitario, 
                             venta_detalle_precio_unitario, venta_detalle_nombre_producto, venta_detalle_cantidad, 
                             venta_detalle_total_igv, venta_detalle_porcentaje_igv, venta_detalle_valor_total, 
-                            venta_detalle_importe_total, venta_detalle_descuento) 
-                            values (?,?,?,?,?,?,?,?,?,?,?)';
+                            venta_detalle_importe_total, venta_detalle_descuento, venta_detalle_stock, venta_detalle_movimiento_stock) 
+                            values (?,?,?,?,?,?,?,?,?,?,?,?,?)';
             $stm = $this->pdo->prepare($sql);
             $stm->execute([
                 $model->id_venta,
@@ -240,7 +240,9 @@ class Ventas
                 $model->venta_detalle_porcentaje_igv,
                 $model->venta_detalle_valor_total,
                 $model->venta_detalle_total_price,
-                $model->venta_detalle_descuento
+                $model->venta_detalle_descuento,
+                $model->venta_detalle_stock,
+                $model->venta_detalle_movimiento_stock
             ]);
             return 1;
         } catch (Throwable $e){
@@ -251,12 +253,26 @@ class Ventas
 
     public function listar_id_producto_productoprecio($id_producto_precio){
         try{
-            $sql = "Select * from producto p inner join producto_precio p2 on p.id_producto = p2.id_producto 
+            $sql = "Select * from producto p inner join talla t on p.id_producto = t.id_producto inner join producto_precio p2 on p2.id_talla = t.id_talla
                     where p2.id_producto_precio = ? AND producto_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_producto_precio]);
             $result = $stm->fetch();
             $result = $result->id_producto;
+        } catch (Exception $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 0;
+        }
+        return $result;
+    }
+    public function listar_id_talla_productoprecio($id_producto_precio){
+        try{
+            $sql = "Select * from producto p inner join talla t on p.id_producto = t.id_producto inner join producto_precio p2 on p2.id_talla = t.id_talla
+                    where p2.id_producto_precio = ? AND producto_estado = 1";
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id_producto_precio]);
+            $result = $stm->fetch();
+            $result = $result->id_talla;
         } catch (Exception $e){
             $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
             $result = 0;
@@ -292,6 +308,70 @@ class Ventas
             //throw new Exception($e->getMessage());
             $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
             $result = 2;
+        }
+        return $result;
+    }
+
+    public function contar_stock_talla($id_talla){
+        try{
+            $sql = 'select sum(vd.venta_detalle_movimiento_stock) as total from ventas v inner join ventas_detalle vd on v.id_venta = vd.id_venta inner join producto_precio pp on vd.id_producto_precio = pp.id_producto_precio where pp.id_talla = ? and v.venta_cancelar = 1 and v.anulado_sunat = 0 and vd.venta_detalle_stock = 1';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([
+                $id_talla
+            ]);
+            $result = $stm->fetch();
+        }catch (Exception $e){
+            //throw new Exception($e->getMessage());
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 2;
+        }
+        return $result->total ?? 0;
+    }
+
+    public function actualizar_stock_talla($cantidad, $id_talla){
+        try{
+            $sql = 'update talla set talla_stock = ? where id_talla = ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([
+                $cantidad, $id_talla
+            ]);
+            $result = 1;
+        }catch (Exception $e){
+            //throw new Exception($e->getMessage());
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 2;
+        }
+        return $result;
+    }
+
+    public function buscar_detalle_venta($id_venta){
+        try{
+            $sql = 'select * from ventas_detalle vd inner join producto_precio pp on vd.id_producto_precio = pp.id_producto_precio where vd.id_venta = ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([
+                $id_venta
+            ]);
+            $result = $stm->fetchAll();
+        }catch (Exception $e){
+            //throw new Exception($e->getMessage());
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 2;
+        }
+        return $result;
+    }
+
+    public function anular_movimiento_detalle($id_venta_detalle){
+        try{
+            $sql = 'update ventas_detalle set venta_detalle_stock = 0 where id_venta_detalle = ?';
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([
+                $id_venta_detalle
+            ]);
+            $result = 1;
+        }catch (Exception $e){
+            //throw new Exception($e->getMessage());
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 0;
         }
         return $result;
     }
@@ -508,10 +588,10 @@ class Ventas
     }
     public function listar_ventas_sin_enviar(){
         try{
-            $sql = 'SELECT * FROM ventas v inner join clientes c on v.id_cliente = c.id_cliente inner join monedas mo
+            $sql = "SELECT * FROM ventas v inner join clientes c on v.id_cliente = c.id_cliente inner join monedas mo
                         on v.id_moneda = mo.id_moneda INNER JOIN usuarios u on v.id_usuario = u.id_usuario 
                         inner join tipo_pago tp on v.id_tipo_pago = tp.id_tipo_pago 
-                        where v.venta_estado_sunat = 0';
+                        where v.venta_estado_sunat = 0 and v.venta_tipo in ('01', '03', '07', '08')";
             $stm = $this->pdo->prepare($sql);
             $stm->execute();
             return $stm->fetchAll();
@@ -594,6 +674,20 @@ class Ventas
                                              where id_venta = ?";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$estado,2,1,0,0,$id_venta]);
+            $result = 1;
+        } catch (Throwable $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 2;
+        }
+        return $result;
+    }
+    public function actualizar_nota_venta_anulado($id_venta){
+        try{
+            $sql = "UPDATE ventas SET 
+                    anulado_sunat = ?, venta_cancelar = ?, venta_estado_sunat = ?
+                                             where id_venta = ?";
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([1,0,0,$id_venta]);
             $result = 1;
         } catch (Throwable $e){
             $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
@@ -1414,6 +1508,19 @@ class Ventas
             $sql = "update guia_remision set guia_remision_numTicket = ?, guia_remision_fecRecepcion=? where id_guia = ?";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$num_ticket, $fecRecepcion,$id_guia]);
+            $result = 1;
+        } catch (Throwable $e){
+            $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);
+            $result = 2;
+        }
+        return $result;
+    }
+
+    public function poner_enviado($id_venta){
+        try{
+            $sql = "update ventas set venta_estado_sunat = 1 where id_venta = ?";
+            $stm = $this->pdo->prepare($sql);
+            $stm->execute([$id_venta]);
             $result = 1;
         } catch (Throwable $e){
             $this->log->insertar($e->getMessage(), get_class($this).'|'.__FUNCTION__);

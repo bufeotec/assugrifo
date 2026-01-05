@@ -756,9 +756,9 @@ class Reporte
 
     public function ventas_efectivo($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
-                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 3 and v.venta_estado = 1';
+            $sql = "select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
+                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 3 and v.venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -771,9 +771,9 @@ class Reporte
 
     public function ventas_tarjeta($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
-                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 1 and v.venta_estado = 1';
+            $sql = "select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
+                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS') 
+                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 1 and v.venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -786,9 +786,9 @@ class Reporte
 
     public function ventas_trans_plin($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
-                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 5 and v.venta_estado = 1';
+            $sql = "select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
+                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 5 and v.venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -801,9 +801,9 @@ class Reporte
 
     public function ventas_trans_yape($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
-                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 4 and v.venta_estado = 1';
+            $sql = "select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
+                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 4 and v.venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -816,9 +816,9 @@ class Reporte
 
     public function ventas_trans_otros($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
-                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 6 and v.venta_estado = 1';
+            $sql = "select SUM(vdp.venta_detalle_valor_total) total from ventas v inner join ventas_detalle vdp on v.id_venta = vdp.id_venta
+                    where v.id_caja = ? and date(v.venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and v.id_tipo_pago = 6 and v.venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -831,9 +831,9 @@ class Reporte
 
     public function impuestos($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select sum(venta_icbper) total from ventas 
-                    where id_caja = ? and date(venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and id_tipo_pago = 3 and venta_estado = 1';
+            $sql = "select sum(venta_icbper) total from ventas 
+                    where id_caja = ? and date(venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and id_tipo_pago = 3 and venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -846,9 +846,9 @@ class Reporte
 
     public function impuestos_($fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select sum(venta_icbper) total from ventas 
-                    where id_caja = 1 and date(venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and id_tipo_pago = 3 and venta_estado = 1';
+            $sql = "select sum(venta_icbper) total from ventas 
+                    where id_caja = 1 and date(venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and id_tipo_pago = 3 and venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -861,9 +861,9 @@ class Reporte
 
     public function impuestos_tt($id_caja, $fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select sum(venta_icbper) total from ventas 
-                    where id_caja = ? and date(venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1 and id_tipo_pago <> 3 and venta_estado = 1';
+            $sql = "select sum(venta_icbper) total from ventas 
+                    where id_caja = ? and date(venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1 and id_tipo_pago <> 3 and venta_estado = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja, $fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();
@@ -917,8 +917,8 @@ class Reporte
 
     public function n_ventas_salon($id_caja,$fecha_ini_caja, $fecha_fin_caja){
         try{
-            $sql = 'select count(id_venta) total from ventas where id_caja = ? and date(venta_fecha) between ? and ? and venta_tipo <> 07 
-                    and anulado_sunat = 0 and venta_cancelar = 1';
+            $sql = "select count(id_venta) total from ventas where id_caja = ? and date(venta_fecha) between ? and ? and venta_tipo not in ('07','OI','OS')
+                    and anulado_sunat = 0 and venta_cancelar = 1";
             $stm = $this->pdo->prepare($sql);
             $stm->execute([$id_caja,$fecha_ini_caja, $fecha_fin_caja]);
             $return = $stm->fetch();

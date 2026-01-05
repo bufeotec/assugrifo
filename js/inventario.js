@@ -360,3 +360,30 @@ function jalar_categorias(){
         }
     });
 }
+
+function  validar_fechas2(){
+    var fecha_inicio = $('#fecha_inicio').val();
+    var fecha_fin = $('#fecha_fin').val();
+
+    var fecha_inicial = new Date(fecha_inicio);
+    var fecha_final = new Date(fecha_fin);
+
+    if(fecha_inicial > fecha_final){
+        //alertify.warning('Las Fecha de Inicio No Puede Ser Mayor a la Fecha Final');
+        $('#fecha_fin').val(fecha_inicio);
+    }
+}
+
+function consultar_kardex_item(id) {
+    var valor = true;
+    var fecha_inicio = $("#fecha_inicio").val();
+    var fecha_fin = $("#fecha_fin").val();
+    valor = validar_campo_vacio('fecha_inicio', fecha_inicio, valor);
+    valor = validar_campo_vacio('fecha_fin', fecha_fin, valor);
+    if(valor){
+        /*alertify.message('Cargando Recursos de Sede');
+        //$("#nuevo_recurso").removeClass('no-show');
+        $('#informacion_almacen').load(urlweb + 'almacen/listar_recursos_almacen/' + id_sede);*/
+        location.href = urlweb + 'index.php?c=inventario&a=kardex_item&id=' + id + '&fecha_inicio=' + fecha_inicio + '&fecha_fin=' + fecha_fin;
+    }
+}
